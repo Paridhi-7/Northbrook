@@ -22,7 +22,7 @@ export default function ContactPage() {
   return (
     <>
       <section className="relative min-h-[35vh] flex items-center justify-center overflow-hidden bg-charcoal">
-        <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1920&h=500&fit=crop" alt="" className="absolute inset-0 w-full h-full object-cover opacity-30" />
+        <img src="/products/cord-sets/01.jpg" alt="" className="absolute inset-0 w-full h-full object-cover opacity-30" />
         <div className="absolute inset-0 bg-gradient-to-b from-charcoal/60 to-charcoal/80" />
         <div className="relative z-10 text-center px-5">
           <motion.p initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="text-cream/60 text-xs font-semibold tracking-[0.3em] uppercase mb-3">Get in Touch</motion.p>

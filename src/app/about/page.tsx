@@ -34,12 +34,12 @@ const values = [
 ];
 
 const gallery = [
-  "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=400&h=500&fit=crop",
-  "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=400&h=500&fit=crop",
-  "https://images.unsplash.com/photo-1558171813-4c088753af8f?w=400&h=500&fit=crop",
-  "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=400&h=500&fit=crop",
-  "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=500&fit=crop",
-  "https://images.unsplash.com/photo-1581783898377-1c85bf937427?w=400&h=500&fit=crop",
+  "/products/cord-sets/01.jpg",
+  "/products/butterfly/01.jpg",
+  "/products/day-dream-hoodie/01.jpg",
+  "/products/racing-hoodie/01.jpg",
+  "/products/cargo-girls/01.jpg",
+  "/products/game-over-hoodie-girls/01.jpg",
 ];
 
 export default function AboutPage() {
@@ -63,7 +63,7 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           <ScrollReveal direction="left">
             <div className="rounded-2xl overflow-hidden aspect-[4/3]">
-              <img src="https://images.unsplash.com/photo-1581783898377-1c85bf937427?w=800&h=600&fit=crop" alt="Workshop" className="w-full h-full object-cover" />
+              <img src="/products/magknit-wording/01.jpg" alt="Workshop" className="w-full h-full object-cover" />
             </div>
           </ScrollReveal>
           <ScrollReveal direction="right">

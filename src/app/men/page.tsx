@@ -9,14 +9,14 @@ import { getProductsByCategory } from "@/data/products";
 const filters = ["All", "New", "Sale", "Best Seller"];
 
 export default function MenPage() {
-  const all = getProductsByCategory("men");
+  const all = [...getProductsByCategory("men"), ...getProductsByCategory("unisex")];
   const [active, setActive] = useState("All");
   const filtered = active === "All" ? all : all.filter((p) => p.badge === active);
 
   return (
     <>
       <section className="relative min-h-[40vh] flex items-center justify-center overflow-hidden bg-charcoal">
-        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1920&h=600&fit=crop" alt="" className="absolute inset-0 w-full h-full object-cover opacity-40" />
+        <img src="/products/cargo-boys/01.jpg" alt="" className="absolute inset-0 w-full h-full object-cover opacity-40" />
         <div className="absolute inset-0 bg-gradient-to-b from-charcoal/60 to-charcoal/80" />
         <div className="relative z-10 text-center px-5">
           <motion.p initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="text-cream/60 text-xs font-semibold tracking-[0.3em] uppercase mb-3">Men&apos;s Collection</motion.p>
@@ -39,7 +39,7 @@ export default function MenPage() {
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-8">
             {filtered.map((p, i) => (
               <motion.div key={p.id} layout initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: i * 0.05 }}>
-                <ProductCard id={p.id} name={p.name} price={p.price} originalPrice={p.originalPrice} image={p.image} badge={p.badge} colors={p.colors} sizes={p.sizes} />
+                <ProductCard id={p.id} name={p.name} price={p.price} originalPrice={p.originalPrice} images={p.images} badge={p.badge} colors={p.colors} sizes={p.sizes} />
               </motion.div>
             ))}
           </div>

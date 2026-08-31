@@ -11,13 +11,13 @@ const categories = [
     title: "Men's Collection",
     desc: "Refined knitwear for the modern man. Timeless pieces, premium natural fibres.",
     href: "/men",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=700&h=900&fit=crop",
+    image: "/products/cargo-boys/01.jpg",
   },
   {
     title: "Women's Collection",
     desc: "Elegant comfort that transitions effortlessly from day to evening.",
     href: "/women",
-    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=700&h=900&fit=crop",
+    image: "/products/butterfly/01.jpg",
   },
 ];
 
@@ -29,8 +29,8 @@ export default function HomePage() {
       {/* ── Hero ────────────────────────────────────── */}
       <section className="relative min-h-[92vh] flex items-center overflow-hidden">
         <img
-          src="https://images.unsplash.com/photo-1558171813-4c088753af8f?w=1920&h=1080&fit=crop"
-          alt="NorthBrook knitwear"
+          src="/products/cord-sets/01.jpg"
+          alt="NorthBrook collection"
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
@@ -131,7 +131,7 @@ export default function HomePage() {
                   name={p.name}
                   price={p.price}
                   originalPrice={p.originalPrice}
-                  image={p.image}
+                  images={p.images}
                   badge={p.badge}
                   colors={p.colors}
                   sizes={p.sizes}
@@ -148,7 +148,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <ScrollReveal direction="left">
               <div className="relative rounded-2xl overflow-hidden aspect-square">
-                <img src="https://images.unsplash.com/photo-1581783898377-1c85bf937427?w=800&h=800&fit=crop" alt="NorthBrook workshop" className="w-full h-full object-cover" />
+                <img src="/products/magknit-wording/01.jpg" alt="NorthBrook workshop" className="w-full h-full object-cover" />
               </div>
             </ScrollReveal>
             <ScrollReveal direction="right">
