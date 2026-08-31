@@ -72,9 +72,11 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <ScrollReveal direction="left">
               <div className="relative aspect-[4/3] rounded-sm overflow-hidden bg-cream">
-                <div className="placeholder-img absolute inset-0 text-sm">
-                  <span>NorthBrook Family Workshop</span>
-                </div>
+                <img
+                  src="/workshop.svg"
+                  alt="NorthBrook Family Workshop"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
               </div>
             </ScrollReveal>
 

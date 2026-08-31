@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { useCart } from "@/context/CartContext";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -14,9 +15,10 @@ const navLinks = [
 ];
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  const { totalItems, setIsOpen: setCartOpen } = useCart();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -25,7 +27,7 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    setIsOpen(false);
+    setIsMobileOpen(false);
   }, [pathname]);
 
   return (
@@ -72,31 +74,64 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden relative w-8 h-8 flex flex-col items-center justify-center gap-1.5"
-            aria-label="Toggle menu"
-          >
+          {/* Right side: Cart + Mobile menu */}
+          <div className="flex items-center gap-4">
+            {/* Cart Icon */}
+            <button
+              onClick={() => setCartOpen(true)}
+              className="relative p-2 text-charcoal hover:text-rust transition-colors"
+              aria-label="Open cart"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.5}
+                  d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+                />
+              </svg>
+              {totalItems > 0 && (
+                <motion.span
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  className="absolute -top-0.5 -right-0.5 w-5 h-5 bg-rust text-offwhite text-[10px] font-bold rounded-full flex items-center justify-center"
+                >
+                  {totalItems}
+                </motion.span>
+              )}
+            </button>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setIsMobileOpen(!isMobileOpen)}
+              className="md:hidden relative w-8 h-8 flex flex-col items-center justify-center gap-1.5"
+              aria-label="Toggle menu"
+            >
             <motion.span
-              animate={isOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
+              animate={isMobileOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
               className="w-6 h-0.5 bg-charcoal block"
             />
             <motion.span
-              animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
+              animate={isMobileOpen ? { opacity: 0 } : { opacity: 1 }}
               className="w-6 h-0.5 bg-charcoal block"
             />
             <motion.span
-              animate={isOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
-              className="w-6 h-0.5 bg-charcoal block"
-            />
-          </button>
+              animate={isMobileOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
+                className="w-6 h-0.5 bg-charcoal block"
+              />
+            </button>
+          </div>
         </div>
       </div>
 
       {/* Mobile Menu */}
       <AnimatePresence>
-        {isOpen && (
+        {isMobileOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}

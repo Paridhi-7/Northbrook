@@ -94,6 +94,7 @@ export default function MenPage() {
                   image={product.image}
                   badge={product.badge}
                   colors={product.colors}
+                  sizes={product.sizes}
                 />
               </motion.div>
             ))}

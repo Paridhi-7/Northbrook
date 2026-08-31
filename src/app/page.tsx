@@ -28,10 +28,12 @@ export default function HomePage() {
     <>
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden bg-cream">
-        {/* Background placeholder */}
-        <div className="absolute inset-0 placeholder-img opacity-30 text-lg">
-          <span>Hero Image — NorthBrook Knitwear</span>
-        </div>
+        {/* Background SVG placeholder */}
+        <img
+          src="/hero.svg"
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover opacity-40"
+        />
         {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-charcoal/40 via-charcoal/20 to-offwhite/80" />
 
@@ -119,9 +121,11 @@ export default function HomePage() {
             <ScrollReveal key={collection.href} delay={index * 0.15}>
               <Link href={collection.href} className="group block">
                 <div className="relative aspect-[4/5] overflow-hidden rounded-sm bg-cream">
-                  <div className="placeholder-img absolute inset-0 text-sm">
-                    <span>{collection.title}</span>
-                  </div>
+                  <img
+                    src={collection.image}
+                    alt={collection.title}
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-charcoal/70 via-charcoal/20 to-transparent group-hover:from-charcoal/80 transition-all duration-500" />
                   <div className="absolute bottom-0 left-0 right-0 p-8">
                     <h3 className="font-heading text-2xl md:text-3xl text-offwhite font-bold mb-2">
@@ -166,6 +170,7 @@ export default function HomePage() {
                   image={product.image}
                   badge={product.badge}
                   colors={product.colors}
+                  sizes={product.sizes}
                 />
               </ScrollReveal>
             ))}
@@ -179,9 +184,11 @@ export default function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <ScrollReveal direction="left">
               <div className="relative aspect-square bg-cream rounded-sm overflow-hidden">
-                <div className="placeholder-img absolute inset-0 text-sm">
-                  <span>NorthBrook Workshop</span>
-                </div>
+                <img
+                  src="/workshop.svg"
+                  alt="NorthBrook Workshop"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
               </div>
             </ScrollReveal>
 

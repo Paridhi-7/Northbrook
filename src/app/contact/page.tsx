@@ -1,11 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ScrollReveal from "@/components/ScrollReveal";
+import { sendContactEmail } from "@/app/actions/contact";
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
+  const [isPending, startTransition] = useTransition();
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -15,7 +18,15 @@ export default function ContactPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setError("");
+    startTransition(async () => {
+      const result = await sendContactEmail(formData);
+      if (result.success) {
+        setSubmitted(true);
+      } else {
+        setError(result.error || "Something went wrong. Please try again.");
+      }
+    });
   };
 
   const handleChange = (
@@ -130,11 +141,19 @@ export default function ContactPage() {
                           placeholder="Tell us how we can help..."
                         />
                       </div>
+
+                      {error && (
+                        <p className="text-rust text-sm bg-rust/10 px-4 py-3 rounded-sm">
+                          {error}
+                        </p>
+                      )}
+
                       <button
                         type="submit"
-                        className="px-8 py-4 bg-charcoal text-offwhite text-sm tracking-widest uppercase hover:bg-rust transition-colors duration-300"
+                        disabled={isPending}
+                        className="px-8 py-4 bg-charcoal text-offwhite text-sm tracking-widest uppercase hover:bg-rust transition-colors duration-300 disabled:opacity-60 disabled:cursor-not-allowed"
                       >
-                        Send Message
+                        {isPending ? "Sending..." : "Send Message"}
                       </button>
                     </motion.form>
                   ) : (
@@ -198,10 +217,10 @@ export default function ContactPage() {
                           Email
                         </p>
                         <a
-                          href="mailto:hello@northbook.com"
+                          href="mailto:northbrook.official@gmail.com"
                           className="text-charcoal hover:text-rust transition-colors"
                         >
-                          hello@northbook.com
+                          northbrook.official@gmail.com
                         </a>
                       </div>
                       <div>
@@ -209,12 +228,12 @@ export default function ContactPage() {
                           Instagram
                         </p>
                         <a
-                          href="https://instagram.com/northbook"
+                          href="https://instagram.com/northbrook"
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-charcoal hover:text-rust transition-colors"
                         >
-                          @northbook
+                          @northbrook
                         </a>
                       </div>
                     </div>
@@ -240,10 +259,10 @@ export default function ContactPage() {
                       enquiry?
                     </p>
                     <a
-                      href="mailto:orders@northbook.com"
+                      href="mailto:northbrook.official@gmail.com"
                       className="text-rust-light text-xs tracking-widest uppercase hover:text-rust transition-colors"
                     >
-                      orders@northbook.com →
+                      northbrook.official@gmail.com →
                     </a>
                   </div>
                 </div>
