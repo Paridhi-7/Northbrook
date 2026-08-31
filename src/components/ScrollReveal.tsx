@@ -1,57 +1,44 @@
 "use client";
 
-import { useEffect, useRef, ReactNode } from "react";
-import { motion, useInView, useAnimation, Variant } from "framer-motion";
+import { useEffect, useRef, type ReactNode } from "react";
+import { motion, useInView, useAnimation } from "framer-motion";
 
-interface ScrollRevealProps {
+interface Props {
   children: ReactNode;
-  width?: "fit-content" | "100%";
-  direction?: "up" | "down" | "left" | "right";
+  direction?: "up" | "down" | "left" | "right" | "none";
   delay?: number;
+  className?: string;
 }
 
-const variants: Record<string, { hidden: Variant; visible: Variant }> = {
-  up: {
-    hidden: { opacity: 0, y: 60 },
-    visible: { opacity: 1, y: 0 },
-  },
-  down: {
-    hidden: { opacity: 0, y: -60 },
-    visible: { opacity: 1, y: 0 },
-  },
-  left: {
-    hidden: { opacity: 0, x: -60 },
-    visible: { opacity: 1, x: 0 },
-  },
-  right: {
-    hidden: { opacity: 0, x: 60 },
-    visible: { opacity: 1, x: 0 },
-  },
+const dir = {
+  up: { hidden: { opacity: 0, y: 50 }, visible: { opacity: 1, y: 0 } },
+  down: { hidden: { opacity: 0, y: -50 }, visible: { opacity: 1, y: 0 } },
+  left: { hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0 } },
+  right: { hidden: { opacity: 0, x: 50 }, visible: { opacity: 1, x: 0 } },
+  none: { hidden: { opacity: 0 }, visible: { opacity: 1 } },
 };
 
 export default function ScrollReveal({
   children,
-  width = "100%",
   direction = "up",
   delay = 0,
-}: ScrollRevealProps) {
+  className = "",
+}: Props) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const controls = useAnimation();
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const ctrl = useAnimation();
 
   useEffect(() => {
-    if (isInView) {
-      controls.start("visible");
-    }
-  }, [isInView, controls]);
+    if (inView) ctrl.start("visible");
+  }, [inView, ctrl]);
 
   return (
-    <div ref={ref} style={{ width }}>
+    <div ref={ref} className={className}>
       <motion.div
-        variants={variants[direction]}
+        variants={dir[direction]}
         initial="hidden"
-        animate={controls}
-        transition={{ duration: 0.6, delay, ease: "easeOut" }}
+        animate={ctrl}
+        transition={{ duration: 0.7, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
       >
         {children}
       </motion.div>

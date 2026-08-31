@@ -1,31 +1,16 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-rust: #B7472A;
-  --color-rust-light: #D4654B;
-  --color-rust-dark: #8F3520;
-  --color-charcoal: #2D2D2D;
-  --color-charcoal-light: #4A4A4A;
-  --color-offwhite: #FAF8F5;
-  --color-warmbeige: #E8DFD4;
-  --color-warmbeige-dark: #D4C5B3;
-  --color-earth-brown: #8B6F47;
-  --color-earth-light: #A68B5B;
-  --color-cream: #F5F0E8;
-  --color-sage: #7A8B6F;
-  --font-heading: var(--font-heading-font);
-  --font-body: var(--font-body-font);
-}
-
-:root {
-  --background: #FAF8F5;
-  --foreground: #2D2D2D;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  --color-charcoal: #2b2b2b;
+  --color-charcoal-light: #444444;
+  --color-rust: #b5651d;
+  --color-rust-dark: #8f4f16;
+  --color-rust-light: #d4792e;
+  --color-cream: #f5f1eb;
+  --color-cream-dark: #e8e0d4;
+  --color-warm-white: #faf8f5;
+  --font-heading: var(--font-playfair);
+  --font-body: var(--font-inter);
 }
 
 html {
@@ -33,43 +18,44 @@ html {
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-body), 'Helvetica Neue', Arial, sans-serif;
+  background: #f5f1eb;
+  color: #2b2b2b;
+  font-family: var(--font-body), 'Inter', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-heading), 'Georgia', serif;
+  font-family: var(--font-heading), 'Playfair Display', Georgia, serif;
 }
 
-/* Custom scrollbar */
+::selection {
+  background: #b5651d;
+  color: #f5f1eb;
+}
+
 ::-webkit-scrollbar {
   width: 8px;
 }
-
 ::-webkit-scrollbar-track {
-  background: var(--background);
+  background: #f5f1eb;
 }
-
 ::-webkit-scrollbar-thumb {
-  background: var(--color-warmbeige-dark);
+  background: #d4c5b3;
   border-radius: 4px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-earth-brown);
+  background: #b5651d;
 }
 
-/* Placeholder image styling */
-.placeholder-img {
-  background: linear-gradient(135deg, #E8DFD4 0%, #D4C5B3 50%, #E8DFD4 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #8B6F47;
-  font-size: 0.85rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+/* Image loading placeholder */
+.img-placeholder {
+  background: linear-gradient(135deg, #e8e0d4, #d4c5b3, #e8e0d4);
+  background-size: 200% 200%;
+  animation: shimmer 2s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }

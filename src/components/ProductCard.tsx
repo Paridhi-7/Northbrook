@@ -2,248 +2,124 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/context/CartContext";
 
-interface ProductCardProps {
+interface Props {
   id: string;
   name: string;
   price: number;
   originalPrice?: number;
   image: string;
   badge?: "New" | "Sale" | "Best Seller";
-  colors: string[];
+  colors: { name: string; hex: string }[];
   sizes: string[];
 }
 
-export default function ProductCard({
-  id,
-  name,
-  price,
-  originalPrice,
-  image,
-  badge,
-  colors,
-  sizes,
-}: ProductCardProps) {
-  const [isHovered, setIsHovered] = useState(false);
-  const [selectedColor, setSelectedColor] = useState(colors[0]);
-  const [selectedSize, setSelectedSize] = useState(sizes[0]);
-  const [showQuickShop, setShowQuickShop] = useState(false);
-  const [imgError, setImgError] = useState(false);
+export default function ProductCard({ id, name, price, originalPrice, image, badge, colors, sizes }: Props) {
+  const [hovered, setHovered] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selColor, setSelColor] = useState(colors[0]?.name ?? "");
+  const [selSize, setSelSize] = useState(sizes[0] ?? "");
   const { addItem } = useCart();
 
-  const badgeColors: Record<string, string> = {
-    New: "bg-charcoal text-offwhite",
-    Sale: "bg-rust text-offwhite",
-    "Best Seller": "bg-earth-brown text-offwhite",
-  };
-
-  const colorMap: Record<string, string> = {
-    Charcoal: "#2D2D2D",
-    Black: "#2D2D2D",
-    Cream: "#FAF8F5",
-    Oatmeal: "#FAF8F5",
-    Offwhite: "#FAF8F5",
-    Rust: "#B7472A",
-    Navy: "#1B2A4A",
-    Sage: "#7A8B6F",
-    Camel: "#C4A574",
-    Blush: "#E8B4B8",
-    Slate: "#6B7B8D",
-    Forest: "#2D5A3D",
-    "Dark Grey": "#5A5A5A",
-  };
-
-  const handleAddToCart = () => {
-    addItem({ id, name, price, image, color: selectedColor, size: selectedSize });
+  const badgeStyle: Record<string, string> = {
+    New: "bg-charcoal text-white",
+    Sale: "bg-rust text-white",
+    "Best Seller": "bg-charcoal/80 text-white",
   };
 
   return (
-    <motion.div
-      className="group relative cursor-pointer"
-      onHoverStart={() => setIsHovered(true)}
-      onHoverEnd={() => setIsHovered(false)}
-      whileHover={{ y: -4 }}
-      transition={{ duration: 0.3 }}
-    >
-      {/* Image Container */}
-      <div className="relative aspect-[3/4] overflow-hidden rounded-sm bg-cream">
-        {/* SVG Placeholder Image */}
-        {!imgError ? (
-          <img
-            src={image}
-            alt={name}
-            className="w-full h-full object-cover"
-            onError={() => setImgError(true)}
-          />
-        ) : (
-          <div className="placeholder-img absolute inset-0 text-xs">
-            <span>{name}</span>
-          </div>
-        )}
-
-        {/* Badge */}
-        {badge && (
-          <span
-            className={`absolute top-3 left-3 px-3 py-1 text-[10px] tracking-widest uppercase ${badgeColors[badge]} z-10`}
-          >
-            {badge}
-          </span>
-        )}
-
-        {/* Hover Overlay */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: isHovered ? 1 : 0 }}
-          transition={{ duration: 0.3 }}
-          className="absolute inset-0 bg-charcoal/30 flex items-center justify-center"
-        >
-          <motion.button
-            initial={{ y: 20, opacity: 0 }}
-            animate={isHovered ? { y: 0, opacity: 1 } : { y: 20, opacity: 0 }}
-            transition={{ duration: 0.3, delay: 0.1 }}
-            onClick={(e) => {
-              e.stopPropagation();
-              setShowQuickShop(true);
-            }}
-            className="bg-offwhite text-charcoal px-6 py-3 text-xs tracking-widest uppercase hover:bg-rust hover:text-offwhite transition-colors duration-300"
-          >
-            Quick Shop
-          </motion.button>
-        </motion.div>
-      </div>
-
-      {/* Product Info */}
-      <div className="mt-4 space-y-2">
-        <div className="flex items-center gap-2">
-          {colors.slice(0, 4).map((color) => (
-            <button
-              key={color}
-              onClick={(e) => {
-                e.stopPropagation();
-                setSelectedColor(color);
-              }}
-              className={`w-3 h-3 rounded-full border transition-all ${
-                selectedColor === color
-                  ? "border-charcoal ring-1 ring-charcoal ring-offset-1"
-                  : "border-warmbeige-dark"
-              }`}
-              style={{ backgroundColor: colorMap[color] || "#D4C5B3" }}
-              title={color}
-            />
-          ))}
-        </div>
-        <h3 className="text-charcoal text-sm font-medium">{name}</h3>
-        <div className="flex items-center gap-2">
-          <span className="text-charcoal font-semibold">${price}</span>
-          {originalPrice && (
-            <span className="text-warmbeige-dark text-sm line-through">
-              ${originalPrice}
+    <>
+      <motion.div
+        className="group cursor-pointer"
+        onHoverStart={() => setHovered(true)}
+        onHoverEnd={() => setHovered(false)}
+        whileHover={{ y: -6 }}
+        transition={{ duration: 0.3 }}
+      >
+        {/* Image */}
+        <div className="relative aspect-[3/4] rounded-xl overflow-hidden bg-cream-dark">
+          <img src={image} alt={name} className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
+          {badge && (
+            <span className={`absolute top-3 left-3 px-3 py-1.5 text-[10px] font-semibold tracking-widest uppercase ${badgeStyle[badge]} rounded-full shadow-sm`}>
+              {badge}
             </span>
           )}
+          {/* Hover overlay */}
+          <motion.div initial={false} animate={{ opacity: hovered ? 1 : 0 }} className="absolute inset-0 bg-black/20 flex items-end justify-center pb-6">
+            <motion.button
+              initial={{ y: 20, opacity: 0 }}
+              animate={hovered ? { y: 0, opacity: 1 } : { y: 20, opacity: 0 }}
+              transition={{ duration: 0.3, delay: 0.05 }}
+              onClick={(e) => { e.stopPropagation(); setModalOpen(true); }}
+              className="bg-white text-charcoal px-7 py-3 text-xs font-semibold tracking-widest uppercase rounded-full hover:bg-rust hover:text-white transition-colors duration-300 shadow-lg"
+            >
+              Quick Shop
+            </motion.button>
+          </motion.div>
         </div>
-      </div>
+
+        {/* Info */}
+        <div className="mt-4 px-1">
+          <div className="flex gap-1.5 mb-2">
+            {colors.slice(0, 4).map((c) => (
+              <span key={c.name} className="w-3 h-3 rounded-full border border-charcoal/10 shadow-sm" style={{ backgroundColor: c.hex }} title={c.name} />
+            ))}
+          </div>
+          <h3 className="text-charcoal text-sm font-medium leading-snug">{name}</h3>
+          <div className="flex items-center gap-2 mt-1">
+            <span className="text-charcoal font-bold">${price}</span>
+            {originalPrice && <span className="text-charcoal/35 text-sm line-through">${originalPrice}</span>}
+          </div>
+        </div>
+      </motion.div>
 
       {/* Quick Shop Modal */}
-      {showQuickShop && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="fixed inset-0 bg-charcoal/50 z-[80] flex items-center justify-center p-4"
-          onClick={() => setShowQuickShop(false)}
-        >
-          <motion.div
-            initial={{ scale: 0.95, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            onClick={(e) => e.stopPropagation()}
-            className="bg-offwhite rounded-sm max-w-lg w-full p-8"
-          >
-            <div className="flex justify-between items-start mb-6">
-              <h3 className="font-heading text-xl text-charcoal font-bold">
-                {name}
-              </h3>
-              <button
-                onClick={() => setShowQuickShop(false)}
-                className="text-charcoal-light hover:text-rust transition-colors"
-              >
-                ✕
-              </button>
-            </div>
-
-            {/* Product image in modal */}
-            <div className="w-full h-48 bg-cream rounded-sm overflow-hidden mb-4">
-              {!imgError ? (
+      <AnimatePresence>
+        {modalOpen && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[80] flex items-center justify-center p-4" onClick={() => setModalOpen(false)}>
+            <motion.div initial={{ scale: 0.92, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.92, opacity: 0 }} onClick={(e) => e.stopPropagation()} className="bg-cream rounded-2xl max-w-lg w-full overflow-hidden shadow-2xl">
+              <div className="relative h-64">
                 <img src={image} alt={name} className="w-full h-full object-cover" />
-              ) : (
-                <div className="placeholder-img w-full h-full text-xs">
-                  <span>{name}</span>
+                <button onClick={() => setModalOpen(false)} className="absolute top-4 right-4 w-9 h-9 bg-white/90 backdrop-blur rounded-full flex items-center justify-center text-charcoal hover:bg-white transition shadow-md">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+              </div>
+              <div className="p-6">
+                <h3 className="font-heading text-xl text-charcoal font-bold">{name}</h3>
+                <div className="flex items-center gap-2 mt-1 mb-5">
+                  <span className="text-charcoal font-bold text-lg">${price}</span>
+                  {originalPrice && <span className="text-charcoal/35 line-through">${originalPrice}</span>}
                 </div>
-              )}
-            </div>
 
-            <div className="flex gap-2 mb-2">
-              <span className="text-charcoal font-bold text-xl">${price}</span>
-              {originalPrice && (
-                <span className="text-warmbeige-dark line-through">
-                  ${originalPrice}
-                </span>
-              )}
-            </div>
+                <p className="text-xs tracking-widest uppercase text-charcoal/50 mb-2">Color — {selColor}</p>
+                <div className="flex gap-2 mb-5">
+                  {colors.map((c) => (
+                    <button key={c.name} onClick={() => setSelColor(c.name)} className={`w-8 h-8 rounded-full border-2 transition-all ${selColor === c.name ? "border-charcoal ring-2 ring-charcoal ring-offset-2 ring-offset-cream" : "border-charcoal/10 hover:border-charcoal/30"}`} style={{ backgroundColor: c.hex }} />
+                  ))}
+                </div>
 
-            {/* Color Selection */}
-            <div className="mt-6">
-              <p className="text-xs tracking-widest uppercase text-charcoal mb-3">
-                Color: <span className="font-medium">{selectedColor}</span>
-              </p>
-              <div className="flex gap-3">
-                {colors.map((color) => (
-                  <button
-                    key={color}
-                    onClick={() => setSelectedColor(color)}
-                    className={`w-8 h-8 rounded-full border-2 transition-all flex items-center justify-center ${
-                      selectedColor === color
-                        ? "border-charcoal ring-2 ring-charcoal ring-offset-2"
-                        : "border-warmbeige-dark hover:border-charcoal"
-                    }`}
-                    style={{ backgroundColor: colorMap[color] || "#D4C5B3" }}
-                  />
-                ))}
+                <p className="text-xs tracking-widest uppercase text-charcoal/50 mb-2">Size — {selSize}</p>
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {sizes.map((s) => (
+                    <button key={s} onClick={() => setSelSize(s)} className={`px-4 py-2 text-xs font-medium tracking-wider rounded-full border transition-all ${selSize === s ? "bg-charcoal text-white border-charcoal" : "bg-transparent text-charcoal border-charcoal/20 hover:border-charcoal"}`}>
+                      {s}
+                    </button>
+                  ))}
+                </div>
+
+                <button
+                  onClick={() => { addItem({ id, name, price, image, color: selColor, size: selSize }); setModalOpen(false); }}
+                  className="w-full bg-charcoal text-white py-4 text-sm font-semibold tracking-wider uppercase rounded-xl hover:bg-rust transition-colors duration-300 shadow-lg shadow-charcoal/20"
+                >
+                  Add to Bag
+                </button>
               </div>
-            </div>
-
-            {/* Size Selection */}
-            <div className="mt-5">
-              <p className="text-xs tracking-widest uppercase text-charcoal mb-3">
-                Size: <span className="font-medium">{selectedSize}</span>
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {sizes.map((size) => (
-                  <button
-                    key={size}
-                    onClick={() => setSelectedSize(size)}
-                    className={`px-4 py-2 text-xs tracking-wider border transition-all ${
-                      selectedSize === size
-                        ? "bg-charcoal text-offwhite border-charcoal"
-                        : "bg-transparent text-charcoal border-warmbeige hover:border-charcoal"
-                    }`}
-                  >
-                    {size}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Add to Cart */}
-            <button
-              onClick={handleAddToCart}
-              className="w-full mt-8 bg-charcoal text-offwhite py-4 text-sm tracking-widest uppercase hover:bg-rust transition-colors duration-300"
-            >
-              Add to Bag
-            </button>
+            </motion.div>
           </motion.div>
-        </motion.div>
-      )}
-    </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }

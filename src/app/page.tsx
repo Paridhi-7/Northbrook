@@ -4,20 +4,20 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import ScrollReveal from "@/components/ScrollReveal";
 import ProductCard from "@/components/ProductCard";
-import { getBestSellers, getProductsByCategory } from "@/data/products";
+import { getBestSellers } from "@/data/products";
 
-const collections = [
+const categories = [
   {
     title: "Men's Collection",
-    description: "Refined knitwear for the modern man. Timeless pieces crafted from premium natural fibres.",
+    desc: "Refined knitwear for the modern man. Timeless pieces, premium natural fibres.",
     href: "/men",
-    image: "/collections/mens-collection.jpg",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=700&h=900&fit=crop",
   },
   {
     title: "Women's Collection",
-    description: "Elegant, comfortable knitwear that transitions effortlessly from day to night.",
+    desc: "Elegant comfort that transitions effortlessly from day to evening.",
     href: "/women",
-    image: "/collections/womens-collection.jpg",
+    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=700&h=900&fit=crop",
   },
 ];
 
@@ -26,41 +26,39 @@ export default function HomePage() {
 
   return (
     <>
-      {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden bg-cream">
-        {/* Background SVG placeholder */}
+      {/* ── Hero ────────────────────────────────────── */}
+      <section className="relative min-h-[92vh] flex items-center overflow-hidden">
         <img
-          src="/hero.svg"
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover opacity-40"
+          src="https://images.unsplash.com/photo-1558171813-4c088753af8f?w=1920&h=1080&fit=crop"
+          alt="NorthBrook knitwear"
+          className="absolute inset-0 w-full h-full object-cover"
         />
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-charcoal/40 via-charcoal/20 to-offwhite/80" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
 
-        <div className="relative z-10 text-center px-4 max-w-3xl mx-auto">
+        <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 w-full">
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-warmbeige-dark text-sm tracking-[0.3em] uppercase mb-4"
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="text-cream/70 text-xs sm:text-sm font-medium tracking-[0.3em] uppercase mb-4"
           >
             Family-Run Knitwear Since 2018
           </motion.p>
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="font-heading text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-charcoal font-bold leading-tight"
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="font-heading text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] text-white font-bold leading-[1.05] max-w-3xl"
           >
             Where Comfort
             <br />
-            <span className="text-rust">Meets Fashion</span>
+            <span className="text-rust-light">Meets Fashion</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="mt-6 text-charcoal-light text-lg max-w-xl mx-auto"
+            transition={{ duration: 0.8, delay: 0.7 }}
+            className="mt-6 text-cream/70 text-base sm:text-lg max-w-xl leading-relaxed"
           >
             Premium knitwear crafted with care. Natural fibres, timeless design,
             and the warmth of family tradition.
@@ -68,76 +66,47 @@ export default function HomePage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-            className="mt-8 flex flex-col sm:flex-row gap-4 justify-center"
+            transition={{ duration: 0.8, delay: 0.9 }}
+            className="mt-8 flex flex-wrap gap-4"
           >
-            <Link
-              href="/men"
-              className="inline-block bg-charcoal text-offwhite px-8 py-4 text-sm tracking-widest uppercase hover:bg-rust transition-colors duration-300"
-            >
-              Shop Men
+            <Link href="/men" className="inline-flex items-center gap-2 bg-rust text-white px-8 py-4 text-sm font-semibold tracking-widest uppercase rounded-full hover:bg-rust-dark transition-all duration-300 shadow-lg shadow-rust/30 hover:shadow-xl hover:shadow-rust/40 hover:-translate-y-0.5">
+              Shop Now
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
             </Link>
-            <Link
-              href="/women"
-              className="inline-block border-2 border-charcoal text-charcoal px-8 py-4 text-sm tracking-widest uppercase hover:bg-charcoal hover:text-offwhite transition-all duration-300"
-            >
-              Shop Women
+            <Link href="/about" className="inline-flex items-center gap-2 border-2 border-white/30 text-white px-8 py-4 text-sm font-semibold tracking-widest uppercase rounded-full hover:bg-white/10 hover:border-white/50 transition-all duration-300">
+              Our Story
             </Link>
           </motion.div>
         </div>
 
         {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2"
-        >
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ repeat: Infinity, duration: 2 }}
-            className="w-6 h-10 border-2 border-charcoal/40 rounded-full flex items-start justify-center p-2"
-          >
-            <div className="w-1.5 h-3 bg-charcoal/40 rounded-full" />
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }} className="absolute bottom-8 left-1/2 -translate-x-1/2">
+          <motion.div animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 2 }} className="w-6 h-10 border-2 border-white/30 rounded-full flex items-start justify-center pt-2">
+            <div className="w-1 h-2.5 bg-white/50 rounded-full" />
           </motion.div>
         </motion.div>
       </section>
 
-      {/* Browse Our Selections */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      {/* ── Shop by Category ──────────────────────────── */}
+      <section className="py-24 sm:py-32 px-5 sm:px-8 lg:px-10 max-w-7xl mx-auto">
         <ScrollReveal>
           <div className="text-center mb-16">
-            <p className="text-earth-brown text-sm tracking-[0.2em] uppercase mb-3">
-              Browse Our
-            </p>
-            <h2 className="font-heading text-4xl md:text-5xl text-charcoal font-bold">
-              Collections
-            </h2>
+            <p className="text-rust text-xs font-semibold tracking-[0.25em] uppercase mb-3">Browse Our</p>
+            <h2 className="font-heading text-4xl sm:text-5xl text-charcoal font-bold">Collections</h2>
           </div>
         </ScrollReveal>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {collections.map((collection, index) => (
-            <ScrollReveal key={collection.href} delay={index * 0.15}>
-              <Link href={collection.href} className="group block">
-                <div className="relative aspect-[4/5] overflow-hidden rounded-sm bg-cream">
-                  <img
-                    src={collection.image}
-                    alt={collection.title}
-                    className="absolute inset-0 w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-charcoal/70 via-charcoal/20 to-transparent group-hover:from-charcoal/80 transition-all duration-500" />
-                  <div className="absolute bottom-0 left-0 right-0 p-8">
-                    <h3 className="font-heading text-2xl md:text-3xl text-offwhite font-bold mb-2">
-                      {collection.title}
-                    </h3>
-                    <p className="text-warmbeige text-sm mb-4 max-w-sm">
-                      {collection.description}
-                    </p>
-                    <span className="inline-block text-offwhite text-xs tracking-widest uppercase border-b border-offwhite pb-1 group-hover:text-rust group-hover:border-rust transition-colors duration-300">
-                      Explore Collection →
-                    </span>
-                  </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+          {categories.map((c, i) => (
+            <ScrollReveal key={c.href} delay={i * 0.15}>
+              <Link href={c.href} className="group block relative rounded-2xl overflow-hidden aspect-[4/5]">
+                <img src={c.image} alt={c.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-8 sm:p-10">
+                  <h3 className="font-heading text-2xl sm:text-3xl text-white font-bold mb-2">{c.title}</h3>
+                  <p className="text-white/60 text-sm mb-4 max-w-xs">{c.desc}</p>
+                  <span className="inline-flex items-center gap-2 text-white text-xs font-semibold tracking-widest uppercase group-hover:text-rust-light transition-colors">
+                    Explore <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                  </span>
                 </div>
               </Link>
             </ScrollReveal>
@@ -145,32 +114,27 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Best Selling */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-cream">
+      {/* ── Best Sellers ──────────────────────────────── */}
+      <section className="py-24 sm:py-32 px-5 sm:px-8 lg:px-10 bg-white">
         <div className="max-w-7xl mx-auto">
           <ScrollReveal>
             <div className="text-center mb-16">
-              <p className="text-earth-brown text-sm tracking-[0.2em] uppercase mb-3">
-                Most Loved
-              </p>
-              <h2 className="font-heading text-4xl md:text-5xl text-charcoal font-bold">
-                Best Sellers
-              </h2>
+              <p className="text-rust text-xs font-semibold tracking-[0.25em] uppercase mb-3">Most Loved</p>
+              <h2 className="font-heading text-4xl sm:text-5xl text-charcoal font-bold">Best Sellers</h2>
             </div>
           </ScrollReveal>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
-            {bestSellers.map((product, index) => (
-              <ScrollReveal key={product.id} delay={index * 0.1}>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-8">
+            {bestSellers.map((p, i) => (
+              <ScrollReveal key={p.id} delay={i * 0.08}>
                 <ProductCard
-                  id={product.id}
-                  name={product.name}
-                  price={product.price}
-                  originalPrice={product.originalPrice}
-                  image={product.image}
-                  badge={product.badge}
-                  colors={product.colors}
-                  sizes={product.sizes}
+                  id={p.id}
+                  name={p.name}
+                  price={p.price}
+                  originalPrice={p.originalPrice}
+                  image={p.image}
+                  badge={p.badge}
+                  colors={p.colors}
+                  sizes={p.sizes}
                 />
               </ScrollReveal>
             ))}
@@ -178,78 +142,52 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Brand Story Teaser */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8">
+      {/* ── Brand Story ──────────────────────────────── */}
+      <section className="py-24 sm:py-32 px-5 sm:px-8 lg:px-10">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <ScrollReveal direction="left">
-              <div className="relative aspect-square bg-cream rounded-sm overflow-hidden">
-                <img
-                  src="/workshop.svg"
-                  alt="NorthBrook Workshop"
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
+              <div className="relative rounded-2xl overflow-hidden aspect-square">
+                <img src="https://images.unsplash.com/photo-1581783898377-1c85bf937427?w=800&h=800&fit=crop" alt="NorthBrook workshop" className="w-full h-full object-cover" />
               </div>
             </ScrollReveal>
-
             <ScrollReveal direction="right">
-              <div>
-                <p className="text-earth-brown text-sm tracking-[0.2em] uppercase mb-3">
-                  Our Story
-                </p>
-                <h2 className="font-heading text-4xl md:text-5xl text-charcoal font-bold mb-6">
-                  Where Comfort
-                  <br />
-                  Meets Fashion
-                </h2>
-                <p className="text-charcoal-light leading-relaxed mb-6">
-                  NorthBrook was born from a simple belief: that knitwear should
-                  feel as good as it looks. As a family-run brand, we pour care
-                  into every stitch, choosing only the finest natural fibres
-                  sourced from trusted suppliers.
-                </p>
-                <p className="text-charcoal-light leading-relaxed mb-8">
-                  Our designs draw from the landscapes and traditions that raised
-                  us — understated, warm, and built to last. Each piece is a
-                  testament to craftsmanship, designed to be worn and treasured
-                  for years to come.
-                </p>
-                <Link
-                  href="/about"
-                  className="inline-block text-charcoal text-xs tracking-widest uppercase border-b-2 border-charcoal pb-1 hover:text-rust hover:border-rust transition-colors duration-300"
-                >
-                  Read Our Full Story →
-                </Link>
-              </div>
+              <p className="text-rust text-xs font-semibold tracking-[0.25em] uppercase mb-4">Our Story</p>
+              <h2 className="font-heading text-4xl sm:text-5xl text-charcoal font-bold mb-6 leading-tight">
+                Where Comfort
+                <br />
+                Meets Fashion
+              </h2>
+              <p className="text-charcoal/60 leading-relaxed mb-5">
+                NorthBrook was born from a simple belief: that knitwear should feel as good as it looks.
+                As a family-run brand, we pour care into every stitch, choosing only the finest natural
+                fibres sourced from trusted suppliers.
+              </p>
+              <p className="text-charcoal/60 leading-relaxed mb-8">
+                Our designs draw from the landscapes and traditions that raised us — understated, warm,
+                and built to last. Each piece is a testament to craftsmanship, designed to be worn
+                and treasured for years to come.
+              </p>
+              <Link href="/about" className="inline-flex items-center gap-2 text-charcoal text-sm font-semibold tracking-widest uppercase border-b-2 border-charcoal pb-1 hover:text-rust hover:border-rust transition-colors">
+                Read Our Full Story
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+              </Link>
             </ScrollReveal>
           </div>
         </div>
       </section>
 
-      {/* Newsletter Strip */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-charcoal">
+      {/* ── Newsletter ──────────────────────────────── */}
+      <section className="py-20 sm:py-24 px-5 sm:px-8 lg:px-10 bg-charcoal">
         <div className="max-w-3xl mx-auto text-center">
           <ScrollReveal>
-            <h2 className="font-heading text-3xl md:text-4xl text-offwhite font-bold mb-4">
-              Join the NorthBrook Family
-            </h2>
-            <p className="text-warmbeige-dark mb-8 max-w-lg mx-auto">
-              Sign up for exclusive offers, early access to new collections, and
-              a 10% welcome discount on your first order.
+            <h2 className="font-heading text-3xl sm:text-4xl text-white font-bold mb-4">Join the NorthBrook Family</h2>
+            <p className="text-cream/50 mb-8 max-w-lg mx-auto">
+              Exclusive offers, early access to new collections, and a 10% welcome discount on your first order.
             </p>
-            <form
-              onSubmit={(e) => e.preventDefault()}
-              className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
-            >
-              <input
-                type="email"
-                placeholder="Your email address"
-                className="flex-1 px-4 py-3 bg-charcoal-light/50 border border-charcoal-light text-offwhite placeholder:text-warmbeige-dark text-sm focus:outline-none focus:border-rust transition-colors"
-              />
-              <button
-                type="submit"
-                className="px-6 py-3 bg-rust text-offwhite text-sm tracking-widest uppercase hover:bg-rust-dark transition-colors duration-300"
-              >
+            <form onSubmit={(e) => e.preventDefault()} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+              <input type="email" placeholder="Your email address" className="flex-1 px-5 py-3.5 bg-white/10 border border-white/10 text-white placeholder:text-white/30 text-sm rounded-full focus:outline-none focus:border-rust focus:ring-1 focus:ring-rust transition" />
+              <button type="submit" className="px-7 py-3.5 bg-rust text-white text-sm font-semibold tracking-widest uppercase rounded-full hover:bg-rust-dark transition-colors shadow-lg shadow-rust/30">
                 Subscribe
               </button>
             </form>

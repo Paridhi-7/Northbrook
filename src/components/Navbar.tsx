@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/context/CartContext";
 
-const navLinks = [
+const links = [
   { href: "/", label: "Home" },
   { href: "/men", label: "Men" },
   { href: "/women", label: "Women" },
@@ -15,142 +15,115 @@ const navLinks = [
 ];
 
 export default function Navbar() {
-  const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
-  const { totalItems, setIsOpen: setCartOpen } = useCart();
+  const { totalItems, setIsOpen } = useCart();
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const h = () => setScrolled(window.scrollY > 30);
+    window.addEventListener("scroll", h);
+    return () => window.removeEventListener("scroll", h);
   }, []);
 
-  useEffect(() => {
-    setIsMobileOpen(false);
-  }, [pathname]);
+  useEffect(() => setMobileOpen(false), [pathname]);
 
   return (
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      transition={{ duration: 0.6 }}
+      className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-offwhite/95 backdrop-blur-md shadow-sm"
+          ? "bg-cream/95 backdrop-blur-lg shadow-[0_1px_20px_rgba(0,0,0,0.06)]"
           : "bg-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
-            <span className="text-2xl font-bold text-charcoal tracking-[0.15em] uppercase font-heading">
+          <Link href="/" className="relative z-10">
+            <span className="text-[22px] font-bold text-charcoal tracking-[0.18em] uppercase font-heading">
               NorthBrook
             </span>
           </Link>
 
-          {/* Desktop Nav */}
-          <div className="hidden md:flex items-center space-x-8">
-            {navLinks.map((link) => (
+          {/* Desktop */}
+          <div className="hidden md:flex items-center gap-9">
+            {links.map((l) => (
               <Link
-                key={link.href}
-                href={link.href}
-                className={`relative text-sm tracking-widest uppercase transition-colors duration-300 ${
-                  pathname === link.href
-                    ? "text-rust"
-                    : "text-charcoal hover:text-rust"
+                key={l.href}
+                href={l.href}
+                className={`relative text-[13px] font-medium tracking-[0.12em] uppercase transition-colors duration-300 ${
+                  pathname === l.href ? "text-rust" : "text-charcoal/70 hover:text-charcoal"
                 }`}
               >
-                {link.label}
-                {pathname === link.href && (
+                {l.label}
+                {pathname === l.href && (
                   <motion.span
-                    layoutId="nav-indicator"
-                    className="absolute -bottom-1 left-0 right-0 h-0.5 bg-rust"
-                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    layoutId="nav-line"
+                    className="absolute -bottom-1 left-0 right-0 h-[2px] bg-rust rounded-full"
+                    transition={{ type: "spring", stiffness: 350, damping: 30 }}
                   />
                 )}
               </Link>
             ))}
           </div>
 
-          {/* Right side: Cart + Mobile menu */}
-          <div className="flex items-center gap-4">
-            {/* Cart Icon */}
+          {/* Right */}
+          <div className="flex items-center gap-3">
             <button
-              onClick={() => setCartOpen(true)}
-              className="relative p-2 text-charcoal hover:text-rust transition-colors"
+              onClick={() => setIsOpen(true)}
+              className="relative p-2.5 rounded-full hover:bg-charcoal/5 transition-colors"
               aria-label="Open cart"
             >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={1.5}
-                  d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-                />
+              <svg className="w-[22px] h-[22px] text-charcoal" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
               </svg>
               {totalItems > 0 && (
                 <motion.span
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
-                  className="absolute -top-0.5 -right-0.5 w-5 h-5 bg-rust text-offwhite text-[10px] font-bold rounded-full flex items-center justify-center"
+                  className="absolute -top-0 -right-0 w-[20px] h-[20px] bg-rust text-white text-[10px] font-bold rounded-full flex items-center justify-center shadow-md"
                 >
                   {totalItems}
                 </motion.span>
               )}
             </button>
 
-            {/* Mobile Menu Button */}
+            {/* Mobile hamburger */}
             <button
-              onClick={() => setIsMobileOpen(!isMobileOpen)}
-              className="md:hidden relative w-8 h-8 flex flex-col items-center justify-center gap-1.5"
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className="md:hidden relative z-10 w-10 h-10 flex flex-col items-center justify-center gap-[5px]"
               aria-label="Toggle menu"
             >
-            <motion.span
-              animate={isMobileOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
-              className="w-6 h-0.5 bg-charcoal block"
-            />
-            <motion.span
-              animate={isMobileOpen ? { opacity: 0 } : { opacity: 1 }}
-              className="w-6 h-0.5 bg-charcoal block"
-            />
-            <motion.span
-              animate={isMobileOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
-                className="w-6 h-0.5 bg-charcoal block"
-              />
+              <motion.span animate={mobileOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }} className="w-5 h-[1.5px] bg-charcoal block origin-center" />
+              <motion.span animate={mobileOpen ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }} className="w-5 h-[1.5px] bg-charcoal block" />
+              <motion.span animate={mobileOpen ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }} className="w-5 h-[1.5px] bg-charcoal block origin-center" />
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile overlay */}
       <AnimatePresence>
-        {isMobileOpen && (
+        {mobileOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="md:hidden bg-offwhite/98 backdrop-blur-md border-t border-warmbeige"
+            className="md:hidden bg-cream/98 backdrop-blur-xl border-t border-cream-dark overflow-hidden"
           >
-            <div className="px-6 py-6 space-y-4">
-              {navLinks.map((link) => (
+            <div className="px-6 py-6 space-y-1">
+              {links.map((l) => (
                 <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`block text-sm tracking-widest uppercase py-2 transition-colors ${
-                    pathname === link.href
-                      ? "text-rust"
-                      : "text-charcoal hover:text-rust"
+                  key={l.href}
+                  href={l.href}
+                  className={`block py-3 text-[14px] tracking-[0.12em] uppercase font-medium transition-colors ${
+                    pathname === l.href ? "text-rust" : "text-charcoal/70 hover:text-charcoal"
                   }`}
                 >
-                  {link.label}
+                  {l.label}
                 </Link>
               ))}
             </div>

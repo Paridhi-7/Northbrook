@@ -1,6 +1,13 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, ReactNode, useCallback } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+  type ReactNode,
+} from "react";
 
 export interface CartItem {
   id: string;
@@ -16,7 +23,12 @@ interface CartContextType {
   items: CartItem[];
   addItem: (item: Omit<CartItem, "quantity">) => void;
   removeItem: (id: string, color: string, size: string) => void;
-  updateQuantity: (id: string, color: string, size: string, quantity: number) => void;
+  updateQuantity: (
+    id: string,
+    color: string,
+    size: string,
+    quantity: number
+  ) => void;
   clearCart: () => void;
   totalItems: number;
   totalPrice: number;
@@ -29,70 +41,48 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [isOpen, setIsOpen] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [loaded, setLoaded] = useState(false);
 
-  // Load from localStorage on mount
   useEffect(() => {
-    const stored = localStorage.getItem("northbrook-cart");
-    if (stored) {
-      try {
-        setItems(JSON.parse(stored));
-      } catch {
-        setItems([]);
-      }
-    }
-    setIsLoaded(true);
+    try {
+      const s = localStorage.getItem("nb-cart");
+      if (s) setItems(JSON.parse(s));
+    } catch {}
+    setLoaded(true);
   }, []);
 
-  // Save to localStorage on change
   useEffect(() => {
-    if (isLoaded) {
-      localStorage.setItem("northbrook-cart", JSON.stringify(items));
-    }
-  }, [items, isLoaded]);
+    if (loaded) localStorage.setItem("nb-cart", JSON.stringify(items));
+  }, [items, loaded]);
 
-  const addItem = useCallback((newItem: Omit<CartItem, "quantity">) => {
+  const addItem = useCallback((item: Omit<CartItem, "quantity">) => {
     setItems((prev) => {
-      const existing = prev.find(
-        (item) =>
-          item.id === newItem.id &&
-          item.color === newItem.color &&
-          item.size === newItem.size
+      const ex = prev.find(
+        (i) => i.id === item.id && i.color === item.color && i.size === item.size
       );
-      if (existing) {
-        return prev.map((item) =>
-          item.id === newItem.id &&
-          item.color === newItem.color &&
-          item.size === newItem.size
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
+      if (ex)
+        return prev.map((i) =>
+          i.id === item.id && i.color === item.color && i.size === item.size
+            ? { ...i, quantity: i.quantity + 1 }
+            : i
         );
-      }
-      return [...prev, { ...newItem, quantity: 1 }];
+      return [...prev, { ...item, quantity: 1 }];
     });
     setIsOpen(true);
   }, []);
 
   const removeItem = useCallback((id: string, color: string, size: string) => {
-    setItems((prev) =>
-      prev.filter(
-        (item) =>
-          !(item.id === id && item.color === color && item.size === size)
-      )
-    );
+    setItems((p) => p.filter((i) => !(i.id === id && i.color === color && i.size === size)));
   }, []);
 
   const updateQuantity = useCallback(
-    (id: string, color: string, size: string, quantity: number) => {
-      if (quantity <= 0) {
-        removeItem(id, color, size);
-        return;
-      }
-      setItems((prev) =>
-        prev.map((item) =>
-          item.id === id && item.color === color && item.size === size
-            ? { ...item, quantity }
-            : item
+    (id: string, color: string, size: string, qty: number) => {
+      if (qty <= 0) return removeItem(id, color, size);
+      setItems((p) =>
+        p.map((i) =>
+          i.id === id && i.color === color && i.size === size
+            ? { ...i, quantity: qty }
+            : i
         )
       );
     },
@@ -100,12 +90,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
   );
 
   const clearCart = useCallback(() => setItems([]), []);
-
-  const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
-  const totalPrice = items.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
 
   return (
     <CartContext.Provider
@@ -115,8 +99,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
         removeItem,
         updateQuantity,
         clearCart,
-        totalItems,
-        totalPrice,
+        totalItems: items.reduce((s, i) => s + i.quantity, 0),
+        totalPrice: items.reduce((s, i) => s + i.price * i.quantity, 0),
         isOpen,
         setIsOpen,
       }}
@@ -127,7 +111,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 }
 
 export function useCart() {
-  const context = useContext(CartContext);
-  if (!context) throw new Error("useCart must be used within CartProvider");
-  return context;
+  const c = useContext(CartContext);
+  if (!c) throw new Error("useCart must be inside CartProvider");
+  return c;
 }
