@@ -20,7 +20,7 @@ const womenSlides = [
   "/products/acid-wash-girls-washing/02.jpg",
   "/products/racing-hoodie/02.jpg",
   "/products/day-dream-hoodie/02.jpg",
-  "/products/magknit-strip-patta-hoodie/02.jpg",
+  "/products/game-over-hoodie-girls/02.jpg",
 ];
 
 export default function HomePage() {
@@ -29,7 +29,7 @@ export default function HomePage() {
   return (
     <>
       {/* ── Full-Bleed Hero Background Video ────────── */}
-      <section className="relative min-h-screen flex items-center overflow-hidden bg-charcoal">
+      <section className="relative min-h-[100svh] flex items-center justify-center sm:justify-start overflow-hidden bg-charcoal">
         {/* Full-width Background Video */}
         <video
           autoPlay
@@ -38,32 +38,31 @@ export default function HomePage() {
           playsInline
           poster="/products/acid-wash-boys-washing/02.jpg"
           className="absolute inset-0 w-full h-full object-cover scale-105 pointer-events-none"
-          src="/videos/hero-product.mp4"
+          src="/videos/hero-bg.mp4"
         />
 
-        {/* Cinematic Multi-Layer Dark Gradient Overlay for Maximum Readability */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/65 to-black/40 pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-t from-charcoal via-transparent to-black/60 pointer-events-none" />
-        <div className="absolute inset-0 bg-[radial-gradient(#ffffff08_1px,transparent_1px)] [background-size:28px_28px] pointer-events-none" />
+        {/* Multi-Layer Dark Gradient Overlays for Readability */}
+        <div className="absolute inset-0 bg-gradient-to-t sm:bg-gradient-to-r from-black/95 via-black/75 to-black/45 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-charcoal via-transparent to-black/65 pointer-events-none" />
 
         {/* Hero Content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 w-full pt-32 pb-20">
-          <div className="max-w-3xl">
+        <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 w-full pt-28 sm:pt-36 pb-16">
+          <div className="max-w-3xl text-center sm:text-left mx-auto sm:mx-0">
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-cream/90 text-xs font-semibold tracking-[0.25em] uppercase mb-6 backdrop-blur-md shadow-lg"
+              className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-cream text-[11px] sm:text-xs font-bold tracking-[0.25em] uppercase mb-6 backdrop-blur-md shadow-lg"
             >
               <span className="w-2 h-2 rounded-full bg-rust animate-pulse" />
-              Family-Run Knitwear Since 2018
+              Established 2025 • Pure Natural Knitwear
             </motion.div>
 
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.15 }}
-              className="font-heading text-5xl sm:text-7xl md:text-8xl lg:text-[6rem] text-white font-bold leading-[1.02] tracking-tight drop-shadow-md"
+              className="font-heading text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] text-white font-bold leading-[1.08] tracking-tight drop-shadow-md"
             >
               Where Comfort
               <br />
@@ -74,21 +73,20 @@ export default function HomePage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="mt-6 text-cream/80 text-base sm:text-xl max-w-2xl leading-relaxed drop-shadow-sm font-light"
+              className="mt-5 sm:mt-6 text-cream/85 text-sm sm:text-lg md:text-xl max-w-2xl leading-relaxed drop-shadow-sm font-light mx-auto sm:mx-0"
             >
-              Premium handcrafted knitwear crafted with care. Natural fibres, timeless silhouettes,
-              and the enduring warmth of family craftsmanship.
+              Handcrafted knitwear designed with intention. 100% natural combed cotton, tailored drop-shoulder cuts, and everyday luxury.
             </motion.p>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.45 }}
-              className="mt-10 flex flex-wrap items-center gap-4 sm:gap-5"
+              className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 sm:gap-5 max-w-sm sm:max-w-none mx-auto sm:mx-0"
             >
               <Link
                 href="/men"
-                className="inline-flex items-center gap-2.5 bg-rust text-white px-9 py-4 text-xs sm:text-sm font-bold tracking-widest uppercase rounded-full hover:bg-rust-dark transition-all duration-300 shadow-xl shadow-rust/35 hover:shadow-2xl hover:shadow-rust/50 hover:-translate-y-0.5"
+                className="inline-flex items-center justify-center gap-2.5 bg-rust text-white px-8 py-4 text-xs sm:text-sm font-bold tracking-widest uppercase rounded-full hover:bg-rust-dark transition-all duration-300 shadow-xl shadow-rust/35 hover:-translate-y-0.5"
               >
                 Shop Men&apos;s
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
@@ -98,16 +96,9 @@ export default function HomePage() {
 
               <Link
                 href="/women"
-                className="inline-flex items-center gap-2.5 bg-white/15 hover:bg-white/25 text-white border border-white/30 px-9 py-4 text-xs sm:text-sm font-bold tracking-widest uppercase rounded-full transition-all duration-300 backdrop-blur-md hover:-translate-y-0.5 shadow-lg"
+                className="inline-flex items-center justify-center gap-2.5 bg-white/15 hover:bg-white/25 text-white border border-white/30 px-8 py-4 text-xs sm:text-sm font-bold tracking-widest uppercase rounded-full transition-all duration-300 backdrop-blur-md hover:-translate-y-0.5 shadow-lg"
               >
                 Shop Women&apos;s
-              </Link>
-
-              <Link
-                href="/about"
-                className="inline-flex items-center gap-2 text-white/80 hover:text-white px-4 py-4 text-xs sm:text-sm font-semibold tracking-wider uppercase transition-colors"
-              >
-                Our Story →
               </Link>
             </motion.div>
 
@@ -116,65 +107,47 @@ export default function HomePage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.7 }}
-              className="mt-14 pt-8 border-t border-white/15 flex flex-wrap items-center gap-6 sm:gap-12 text-cream/80"
+              className="mt-10 sm:mt-14 pt-6 sm:pt-8 border-t border-white/15 grid grid-cols-3 gap-2 sm:gap-8 text-cream/80"
             >
               <div>
-                <p className="font-heading text-2xl sm:text-3xl font-bold text-white">100%</p>
-                <p className="text-[11px] tracking-wider uppercase text-cream/60">Natural Fibres</p>
+                <p className="font-heading text-xl sm:text-3xl font-bold text-white">100%</p>
+                <p className="text-[9px] sm:text-[11px] tracking-wider uppercase text-cream/60 mt-0.5">Natural Fibres</p>
               </div>
-              <div className="w-px h-8 bg-white/15" />
-              <div>
-                <p className="font-heading text-2xl sm:text-3xl font-bold text-white">2018</p>
-                <p className="text-[11px] tracking-wider uppercase text-cream/60">Family Heritage</p>
+              <div className="border-x border-white/15 px-2 sm:px-4">
+                <p className="font-heading text-xl sm:text-3xl font-bold text-white">2025</p>
+                <p className="text-[9px] sm:text-[11px] tracking-wider uppercase text-cream/60 mt-0.5">Est. Brand</p>
               </div>
-              <div className="w-px h-8 bg-white/15" />
               <div>
-                <p className="font-heading text-2xl sm:text-3xl font-bold text-white">Pan-India</p>
-                <p className="text-[11px] tracking-wider uppercase text-cream/60">Free Shipping</p>
+                <p className="font-heading text-xl sm:text-3xl font-bold text-white">Pan-India</p>
+                <p className="text-[9px] sm:text-[11px] tracking-wider uppercase text-cream/60 mt-0.5">Free Shipping</p>
               </div>
             </motion.div>
           </div>
         </div>
-
-        {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2 }}
-          className="absolute bottom-6 left-1/2 -translate-x-1/2 hidden md:block"
-        >
-          <motion.div
-            animate={{ y: [0, 6, 0] }}
-            transition={{ repeat: Infinity, duration: 2 }}
-            className="w-5 h-8 border-2 border-white/30 rounded-full flex items-start justify-center pt-1.5"
-          >
-            <div className="w-1 h-2 bg-white/60 rounded-full" />
-          </motion.div>
-        </motion.div>
       </section>
 
       {/* ── Shop by Category (Animated Slideshows) ──── */}
-      <section className="py-24 sm:py-32 px-5 sm:px-8 lg:px-10 max-w-7xl mx-auto">
+      <section className="py-16 sm:py-28 px-5 sm:px-8 lg:px-10 max-w-7xl mx-auto">
         <ScrollReveal>
-          <div className="text-center mb-16">
-            <p className="text-rust text-xs font-semibold tracking-[0.25em] uppercase mb-3">Browse Our</p>
-            <h2 className="font-heading text-4xl sm:text-5xl text-charcoal font-bold">Collections</h2>
+          <div className="text-center mb-12 sm:mb-16">
+            <p className="text-rust text-xs font-bold tracking-[0.25em] uppercase mb-2">Browse Our</p>
+            <h2 className="font-heading text-3xl sm:text-5xl text-charcoal font-bold">Collections</h2>
           </div>
         </ScrollReveal>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-10">
           <ScrollReveal delay={0.1}>
             <CollectionCardSlideshow
               title="Men's Collection"
-              desc="Refined knitwear, utility cargos, and heavyweight hoodies tailored for the modern man."
+              desc="Refined knitwear, utility bottoms, and heavyweight fleece hoodies tailored for the modern man."
               href="/men"
               images={menSlides}
             />
           </ScrollReveal>
 
-          <ScrollReveal delay={0.25}>
+          <ScrollReveal delay={0.2}>
             <CollectionCardSlideshow
               title="Women's Collection"
-              desc="Artistic graphic tees, drop-shoulder fleece hoodies, and effortless daily essentials."
+              desc="Artistic graphic tees, drop-shoulder fleece hoodies, and effortless daily luxury pieces."
               href="/women"
               images={womenSlides}
             />
@@ -183,17 +156,17 @@ export default function HomePage() {
       </section>
 
       {/* ── Best Sellers ──────────────────────────────── */}
-      <section className="py-24 sm:py-32 px-5 sm:px-8 lg:px-10 bg-white">
+      <section className="py-16 sm:py-28 px-5 sm:px-8 lg:px-10 bg-white">
         <div className="max-w-7xl mx-auto">
           <ScrollReveal>
-            <div className="text-center mb-16">
-              <p className="text-rust text-xs font-semibold tracking-[0.25em] uppercase mb-3">Most Loved</p>
-              <h2 className="font-heading text-4xl sm:text-5xl text-charcoal font-bold">Best Sellers</h2>
+            <div className="text-center mb-12 sm:mb-16">
+              <p className="text-rust text-xs font-bold tracking-[0.25em] uppercase mb-2">Most Loved</p>
+              <h2 className="font-heading text-3xl sm:text-5xl text-charcoal font-bold">Best Sellers</h2>
             </div>
           </ScrollReveal>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-8">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-8">
             {bestSellers.map((p, i) => (
-              <ScrollReveal key={p.id} delay={i * 0.08}>
+              <ScrollReveal key={p.id} delay={i * 0.05}>
                 <ProductCard
                   id={p.id}
                   name={p.name}
@@ -210,12 +183,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── Brand Story ──────────────────────────────── */}
-      <section className="py-24 sm:py-32 px-5 sm:px-8 lg:px-10">
+      {/* ── Brand Story Section ──────────────────────── */}
+      <section className="py-16 sm:py-28 px-5 sm:px-8 lg:px-10">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
             <ScrollReveal direction="left">
-              <div className="relative rounded-3xl overflow-hidden aspect-square shadow-xl bg-cream-dark">
+              <div className="relative rounded-3xl overflow-hidden aspect-[4/3] sm:aspect-square shadow-xl bg-cream-dark">
                 <img
                   src="/products/acid-wash-boys-washing/02.jpg"
                   alt="NorthBrook craftsmanship"
@@ -224,25 +197,21 @@ export default function HomePage() {
               </div>
             </ScrollReveal>
             <ScrollReveal direction="right">
-              <p className="text-rust text-xs font-semibold tracking-[0.25em] uppercase mb-4">Our Story</p>
-              <h2 className="font-heading text-4xl sm:text-5xl text-charcoal font-bold mb-6 leading-tight">
+              <p className="text-rust text-xs font-bold tracking-[0.25em] uppercase mb-3">Our Story</p>
+              <h2 className="font-heading text-3xl sm:text-5xl text-charcoal font-bold mb-5 leading-tight">
                 Where Comfort
                 <br />
                 Meets Fashion
               </h2>
-              <p className="text-charcoal/70 leading-relaxed mb-5 text-base sm:text-lg">
-                NorthBrook was born from a simple belief: that knitwear should feel as good as it looks.
-                As a family-run brand, we pour care into every stitch, choosing only the finest natural
-                fibres sourced from trusted suppliers.
+              <p className="text-charcoal/75 leading-relaxed mb-4 text-sm sm:text-base">
+                NorthBrook was established in 2025 from a singular purpose: to craft knitwear that feels as exceptional as it looks. As a dedicated family-run label, we pour care into every stitch, choosing only premium combed natural cotton.
               </p>
-              <p className="text-charcoal/70 leading-relaxed mb-8 text-base">
-                Our designs draw from the landscapes and traditions that raised us — understated, warm,
-                and built to last. Each piece is a testament to craftsmanship, designed to be worn
-                and treasured for years to come.
+              <p className="text-charcoal/70 leading-relaxed mb-6 text-sm sm:text-base">
+                We believe in enduring quality over fast-fashion hype. Every garment is carefully engineered for the perfect relaxed drape, ready to be worn and loved through seasons.
               </p>
               <Link
                 href="/about"
-                className="inline-flex items-center gap-2 text-charcoal text-sm font-semibold tracking-widest uppercase border-b-2 border-charcoal pb-1 hover:text-rust hover:border-rust transition-colors"
+                className="inline-flex items-center gap-2 text-charcoal text-xs sm:text-sm font-bold tracking-widest uppercase border-b-2 border-charcoal pb-1 hover:text-rust hover:border-rust transition-colors"
               >
                 Read Our Full Story
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
@@ -255,22 +224,22 @@ export default function HomePage() {
       </section>
 
       {/* ── Newsletter ──────────────────────────────── */}
-      <section className="py-20 sm:py-24 px-5 sm:px-8 lg:px-10 bg-charcoal">
+      <section className="py-16 sm:py-24 px-5 sm:px-8 lg:px-10 bg-charcoal">
         <div className="max-w-3xl mx-auto text-center">
           <ScrollReveal>
-            <h2 className="font-heading text-3xl sm:text-4xl text-white font-bold mb-4">Join the NorthBrook Family</h2>
-            <p className="text-cream/50 mb-8 max-w-lg mx-auto text-sm sm:text-base">
-              Exclusive offers, early access to new collections, and a 10% welcome discount on your first order.
+            <h2 className="font-heading text-2xl sm:text-4xl text-white font-bold mb-3">Join the NorthBrook Family</h2>
+            <p className="text-cream/60 mb-8 max-w-lg mx-auto text-xs sm:text-base">
+              Exclusive updates, early access to new seasonal drops, and a 10% welcome discount on your first order.
             </p>
             <form onSubmit={(e) => e.preventDefault()} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
               <input
                 type="email"
                 placeholder="Your email address"
-                className="flex-1 px-5 py-3.5 bg-white/10 border border-white/10 text-white placeholder:text-white/30 text-sm rounded-full focus:outline-none focus:border-rust focus:ring-1 focus:ring-rust transition"
+                className="flex-1 px-5 py-3.5 bg-white/10 border border-white/15 text-white placeholder:text-white/40 text-sm rounded-full focus:outline-none focus:border-rust focus:ring-1 focus:ring-rust transition"
               />
               <button
                 type="submit"
-                className="px-7 py-3.5 bg-rust text-white text-sm font-semibold tracking-widest uppercase rounded-full hover:bg-rust-dark transition-colors shadow-lg shadow-rust/30"
+                className="px-7 py-3.5 bg-rust text-white text-xs font-bold tracking-widest uppercase rounded-full hover:bg-rust-dark transition-colors shadow-lg shadow-rust/30"
               >
                 Subscribe
               </button>

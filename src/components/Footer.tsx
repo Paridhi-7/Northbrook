@@ -30,30 +30,31 @@ const socials = [
 
 export default function Footer() {
   return (
-    <footer className="bg-charcoal text-cream">
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 pt-20 pb-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-12 mb-16">
+    <footer className="bg-charcoal text-cream border-t border-white/5">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 pt-16 sm:pt-20 pb-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 sm:gap-12 mb-12 sm:mb-16">
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-2">
-            <Link href="/" className="inline-block mb-5">
-              <span className="text-[22px] font-bold text-white tracking-[0.18em] uppercase font-heading">
-                NorthBrook
+            <Link href="/" className="inline-flex items-center gap-2 mb-4 group">
+              <span className="w-2.5 h-2.5 rounded-full bg-rust" />
+              <span className="text-[22px] font-extrabold text-white tracking-[0.2em] uppercase font-heading">
+                North<span className="text-rust-light">Brook</span>
               </span>
             </Link>
-            <p className="text-cream/60 text-sm leading-relaxed max-w-sm mb-6">
-              Family-run knitwear brand crafting premium comfort pieces since 2018. Natural fibres, timeless silhouettes, and ethical craftsmanship.
+            <p className="text-cream/65 text-xs sm:text-sm leading-relaxed max-w-sm mb-6">
+              Family-run knitwear brand crafting premium comfort pieces since 2025. Natural fibres, timeless silhouettes, and honest craftsmanship.
             </p>
 
             {/* Direct Contact Info */}
-            <div className="space-y-2 text-sm text-cream/70 mb-6">
+            <div className="space-y-2 text-xs sm:text-sm text-cream/75 mb-6">
               <p className="flex items-center gap-2">
-                <span className="text-rust text-xs uppercase font-bold tracking-wider">Phone:</span>
+                <span className="text-rust text-[11px] uppercase font-bold tracking-wider">Phone:</span>
                 <a href="tel:+919992442999" className="text-white hover:text-rust transition-colors font-medium">
                   +91 99924 42999
                 </a>
               </p>
               <p className="flex items-center gap-2">
-                <span className="text-rust text-xs uppercase font-bold tracking-wider">Email:</span>
+                <span className="text-rust text-[11px] uppercase font-bold tracking-wider">Email:</span>
                 <a href="mailto:northbrook.official@gmail.com" className="text-white hover:text-rust transition-colors font-medium">
                   northbrook.official@gmail.com
                 </a>
@@ -80,11 +81,11 @@ export default function Footer() {
 
           {/* Shop */}
           <div>
-            <h4 className="text-white text-xs font-semibold tracking-[0.2em] uppercase mb-5">Shop</h4>
-            <ul className="space-y-3">
+            <h4 className="text-white text-xs font-bold tracking-[0.2em] uppercase mb-4 sm:mb-5">Shop</h4>
+            <ul className="space-y-2.5 sm:space-y-3">
               {shop.map((l) => (
                 <li key={l.href + l.label}>
-                  <Link href={l.href} className="text-cream/50 text-sm hover:text-rust transition-colors duration-300">
+                  <Link href={l.href} className="text-cream/60 text-xs sm:text-sm hover:text-rust transition-colors duration-300">
                     {l.label}
                   </Link>
                 </li>
@@ -94,11 +95,11 @@ export default function Footer() {
 
           {/* Company */}
           <div>
-            <h4 className="text-white text-xs font-semibold tracking-[0.2em] uppercase mb-5">Company</h4>
-            <ul className="space-y-3">
+            <h4 className="text-white text-xs font-bold tracking-[0.2em] uppercase mb-4 sm:mb-5">Company</h4>
+            <ul className="space-y-2.5 sm:space-y-3">
               {company.map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className="text-cream/50 text-sm hover:text-rust transition-colors duration-300">
+                  <Link href={l.href} className="text-cream/60 text-xs sm:text-sm hover:text-rust transition-colors duration-300">
                     {l.label}
                   </Link>
                 </li>
@@ -108,11 +109,11 @@ export default function Footer() {
 
           {/* Policies */}
           <div>
-            <h4 className="text-white text-xs font-semibold tracking-[0.2em] uppercase mb-5">Legal</h4>
-            <ul className="space-y-3">
+            <h4 className="text-white text-xs font-bold tracking-[0.2em] uppercase mb-4 sm:mb-5">Legal</h4>
+            <ul className="space-y-2.5 sm:space-y-3">
               {policies.map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className="text-cream/50 text-sm hover:text-rust transition-colors duration-300">
+                  <Link href={l.href} className="text-cream/60 text-xs sm:text-sm hover:text-rust transition-colors duration-300">
                     {l.label}
                   </Link>
                 </li>
@@ -121,12 +122,12 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-cream/10 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-cream/40 text-xs">
+        <div className="border-t border-cream/10 pt-6 sm:pt-8 flex flex-col sm:flex-row justify-between items-center gap-3 text-center sm:text-left">
+          <p className="text-cream/50 text-[11px] sm:text-xs">
             © {new Date().getFullYear()} NorthBrook. All rights reserved.
           </p>
-          <p className="text-cream/40 text-xs">
-            Crafted with care. Family-run since 2018.
+          <p className="text-cream/50 text-[11px] sm:text-xs">
+            Crafted with care. Family-run since 2025.
           </p>
         </div>
       </div>

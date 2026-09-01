@@ -1,138 +1,204 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 import ScrollReveal from "@/components/ScrollReveal";
 
 const values = [
   {
-    title: "Quality Materials",
-    desc: "We source only the finest natural fibres — combed cotton, merino wool, cashmere, and breathable knits — from ethical suppliers we trust.",
-    icon: (
-      <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
-      </svg>
-    ),
+    icon: "🧶",
+    title: "100% Pure Natural Fibres",
+    desc: "We exclusively spin bio-washed combed cotton, French Terry, and breathable natural fibres that breathe with your body, resisting artificial synthetics.",
   },
   {
-    title: "Family Craftsmanship",
-    desc: "Every piece is designed by our family team and produced with meticulous attention to detail. No shortcuts, no compromises.",
-    icon: (
-      <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
-      </svg>
-    ),
+    icon: "📐",
+    title: "Sculpted Tailoring",
+    desc: "Every cut is engineered for the perfect modern drape — relaxed drop shoulders, reinforced rib collars, and durable double-needle hemlines.",
   },
   {
-    title: "Sustainable Practice",
-    desc: "Small-batch production to minimise waste, biodegradable packaging, and a commitment to ethical sourcing across all lines.",
-    icon: (
-      <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
-      </svg>
-    ),
+    icon: "🏡",
+    title: "Family Heritage",
+    desc: "Every NorthBrook piece is designed, quality-tested, and packed with the pride and direct accountability of a dedicated family-run label.",
   },
-];
-
-const gallery = [
-  "/products/cord-sets/05.jpg",
-  "/products/butterfly/02.jpg",
-  "/products/day-dream-hoodie/02.jpg",
-  "/products/racing-hoodie/02.jpg",
-  "/products/cargo-girls/01.jpg",
-  "/products/game-over-hoodie-girls/02.jpg",
+  {
+    icon: "⏳",
+    title: "Built to Outlast Trends",
+    desc: "We reject throwaway fast-fashion. Our pieces are crafted to retain their softness, shape, and richness through countless wash and wear cycles.",
+  },
 ];
 
 export default function AboutPage() {
   return (
     <>
-      {/* Hero */}
-      <section className="relative pt-36 pb-20 px-5 sm:px-8 lg:px-10 bg-white">
-        <div className="max-w-7xl mx-auto text-center">
-          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-rust text-xs font-semibold tracking-[0.3em] uppercase mb-4">Our Story</motion.p>
-          <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} className="font-heading text-5xl sm:text-6xl lg:text-7xl text-charcoal font-bold mb-6">
-            Built by Family,<br /><span className="text-rust">Worn with Pride</span>
+      {/* ── Editorial Hero Section ──────────────────────── */}
+      <section className="relative min-h-[50vh] sm:min-h-[55vh] flex items-center justify-center overflow-hidden bg-charcoal pt-32 pb-16 sm:pb-20">
+        <img
+          src="/products/cord-sets/05.jpg"
+          alt="NorthBrook Heritage"
+          className="absolute inset-0 w-full h-full object-cover opacity-25 scale-105"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-charcoal/80 via-charcoal/90 to-charcoal" />
+        <div className="relative z-10 text-center px-5 max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-cream/90 text-[11px] sm:text-xs font-bold tracking-[0.25em] uppercase mb-5 backdrop-blur-md"
+          >
+            <span className="w-2 h-2 rounded-full bg-rust animate-pulse" />
+            Established 2025 • Our Story
+          </motion.div>
+          <motion.h1
+            initial={{ opacity: 0, y: 25 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="font-heading text-3xl sm:text-5xl md:text-6xl lg:text-7xl text-white font-bold mb-5 leading-tight"
+          >
+            We Don&apos;t Just Make Knitwear.
+            <br />
+            <span className="text-rust-light italic">We Weave Character.</span>
           </motion.h1>
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }} className="text-charcoal/60 text-lg max-w-2xl mx-auto">
-            NorthBrook is more than a brand — it&apos;s a family tradition of quality knitwear, rooted in craft and built to last.
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="text-cream/80 text-sm sm:text-lg font-light max-w-2xl mx-auto leading-relaxed"
+          >
+            A family-run studio dedicated to the quiet luxury of natural fibres, honest tailoring, and timeless everyday comfort.
           </motion.p>
         </div>
       </section>
 
-      {/* Story */}
-      <section className="py-24 sm:py-32 px-5 sm:px-8 lg:px-10">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          <ScrollReveal direction="left">
-            <div className="rounded-2xl overflow-hidden aspect-[4/3] shadow-lg">
-              <img src="/products/acid-wash-boys-washing/02.jpg" alt="Workshop" className="w-full h-full object-cover" />
-            </div>
-          </ScrollReveal>
-          <ScrollReveal direction="right">
-            <div className="space-y-5">
-              <h2 className="font-heading text-4xl text-charcoal font-bold">The Beginning</h2>
-              <p className="text-charcoal/60 leading-relaxed">NorthBrook started at a kitchen table in 2018, when our family decided to turn a lifelong passion for knitting into something bigger. What began as handcrafted gifts for friends quickly became a calling — to create knitwear that feels as good as it looks.</p>
-              <p className="text-charcoal/60 leading-relaxed">We named the brand after the valley where our family first settled — a place of quiet beauty, rolling hills, and the kind of warmth that stays with you. That spirit lives in every piece we make.</p>
-              <p className="text-charcoal/60 leading-relaxed">Today, NorthBrook remains what it always was: a family operation. We design together, we source materials we believe in, and we produce in small batches — ensuring every garment meets the standard we set for ourselves.</p>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* Values */}
-      <section className="py-24 sm:py-32 px-5 sm:px-8 lg:px-10 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <ScrollReveal>
-            <div className="text-center mb-16">
-              <p className="text-rust text-xs font-semibold tracking-[0.25em] uppercase mb-3">What We Stand For</p>
-              <h2 className="font-heading text-4xl sm:text-5xl text-charcoal font-bold">Our Values</h2>
-            </div>
-          </ScrollReveal>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-            {values.map((v, i) => (
-              <ScrollReveal key={v.title} delay={i * 0.12}>
-                <div className="bg-cream rounded-2xl p-8 sm:p-10 hover:shadow-xl hover:shadow-charcoal/5 transition-all duration-500 hover:-translate-y-1 group">
-                  <div className="w-14 h-14 bg-rust/10 rounded-xl flex items-center justify-center text-rust mb-6 group-hover:bg-rust group-hover:text-white transition-colors duration-500">
-                    {v.icon}
-                  </div>
-                  <h3 className="font-heading text-xl text-charcoal font-bold mb-3">{v.title}</h3>
-                  <p className="text-charcoal/55 text-sm leading-relaxed">{v.desc}</p>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Gallery */}
-      <section className="py-24 sm:py-32 px-5 sm:px-8 lg:px-10">
-        <div className="max-w-7xl mx-auto">
-          <ScrollReveal>
-            <div className="text-center mb-16">
-              <p className="text-rust text-xs font-semibold tracking-[0.25em] uppercase mb-3">Behind the Scenes</p>
-              <h2 className="font-heading text-4xl sm:text-5xl text-charcoal font-bold">Our World</h2>
-            </div>
-          </ScrollReveal>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
-            {gallery.map((img, i) => (
-              <ScrollReveal key={i} delay={i * 0.08}>
-                <div className="rounded-xl overflow-hidden aspect-[4/5] group shadow-md">
-                  <img src={img} alt="NorthBrook" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Quote */}
-      <section className="py-24 sm:py-32 px-5 sm:px-8 lg:px-10 bg-charcoal">
+      {/* ── Manifesto Pull Quote ─────────────────────────── */}
+      <section className="py-16 sm:py-24 px-5 sm:px-8 lg:px-10 bg-cream">
         <div className="max-w-4xl mx-auto text-center">
           <ScrollReveal>
-            <blockquote className="font-heading text-3xl sm:text-4xl text-white font-bold leading-relaxed italic">
-              &ldquo;True luxury isn&apos;t about price tags — it&apos;s about the feeling of slipping into something made with genuine care.&rdquo;
+            <p className="text-rust text-xs font-bold tracking-[0.3em] uppercase mb-4">Our Philosophy</p>
+            <blockquote className="font-heading text-xl sm:text-3xl md:text-4xl text-charcoal font-semibold leading-relaxed tracking-tight">
+              &ldquo;In a world of rushed fast-fashion, NorthBrook was founded on a slower, deeper conviction: that what touches your skin every day should be honest, beautiful, and made to outlive seasons.&rdquo;
             </blockquote>
-            <div className="mt-8 flex flex-col items-center">
-              <div className="w-12 h-px bg-rust mb-4" />
-              <p className="text-cream/60 text-sm tracking-[0.15em] uppercase font-medium">The NorthBrook Family</p>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* ── Our Story & Mission ─────────────────────────── */}
+      <section className="py-16 sm:py-28 px-5 sm:px-8 lg:px-10 bg-white">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
+          <ScrollReveal direction="left">
+            <div className="relative rounded-3xl overflow-hidden aspect-[4/5] shadow-2xl bg-cream-dark">
+              <img
+                src="/products/acid-wash-boys-washing/02.jpg"
+                alt="NorthBrook Crafting Process"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-charcoal/70 via-transparent to-transparent" />
+              <div className="absolute bottom-6 left-6 right-6 text-white">
+                <p className="text-xs font-bold tracking-widest uppercase text-rust-light mb-1">Handcrafted in Small Batches</p>
+                <p className="font-heading text-lg sm:text-xl font-bold">Every piece inspected by our family</p>
+              </div>
+            </div>
+          </ScrollReveal>
+
+          <ScrollReveal direction="right">
+            <div className="space-y-5 sm:space-y-6">
+              <p className="text-rust text-xs font-bold tracking-[0.3em] uppercase">Who We Are</p>
+              <h2 className="font-heading text-3xl sm:text-5xl text-charcoal font-bold leading-tight">
+                Where Comfort
+                <br />
+                Meets True Fashion
+              </h2>
+              <p className="text-charcoal/75 leading-relaxed text-sm sm:text-base">
+                At NorthBrook, we are more than just an apparel label — we are a close-knit collective of craftsmen, designers, and textile enthusiasts united by a single vision: to create garments that look exceptional and feel even better.
+              </p>
+              <p className="text-charcoal/70 leading-relaxed text-sm sm:text-base">
+                Established in 2025, our family sought to solve a common frustration: modern streetwear was either cheaply made synthetic fast-fashion, or overpriced luxury. We chose the middle path — uncompromising high-GSM natural fabrics, ethical small-batch production, and accessible direct-to-consumer pricing.
+              </p>
+              <div className="pt-4 grid grid-cols-2 gap-4 sm:gap-6 border-t border-charcoal/10">
+                <div className="bg-cream/60 p-4 rounded-2xl">
+                  <p className="font-heading text-2xl sm:text-3xl font-bold text-rust">240+ GSM</p>
+                  <p className="text-[10px] sm:text-xs text-charcoal/70 uppercase tracking-wider mt-1 font-semibold">Heavyweight Combed Cotton</p>
+                </div>
+                <div className="bg-cream/60 p-4 rounded-2xl">
+                  <p className="font-heading text-2xl sm:text-3xl font-bold text-charcoal">100%</p>
+                  <p className="text-[10px] sm:text-xs text-charcoal/70 uppercase tracking-wider mt-1 font-semibold">Pre-Shrunk Bio-Washed</p>
+                </div>
+              </div>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* ── Full-Width Visual Break ─────────────────────── */}
+      <section className="relative h-[40vh] sm:h-[50vh] flex items-center justify-center overflow-hidden">
+        <img
+          src="/products/day-dream-hoodie/02.jpg"
+          alt="NorthBrook Lifestyle"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-charcoal/75 backdrop-blur-[2px]" />
+        <div className="relative z-10 text-center px-5 max-w-2xl mx-auto text-white">
+          <ScrollReveal>
+            <p className="text-rust-light text-xs font-bold tracking-[0.3em] uppercase mb-3">The Family Promise</p>
+            <h3 className="font-heading text-2xl sm:text-4xl md:text-5xl font-bold mb-3 leading-tight">
+              Honest Quality. No Shortcuts.
+            </h3>
+            <p className="text-cream/80 text-xs sm:text-base font-light">
+              From the selection of raw combed yarn to the final steam pressing, our hands touch every stage of creation.
+            </p>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* ── Our Values (4 Pillars) ──────────────────────── */}
+      <section className="py-16 sm:py-28 px-5 sm:px-8 lg:px-10 bg-cream">
+        <div className="max-w-7xl mx-auto">
+          <ScrollReveal>
+            <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
+              <p className="text-rust text-xs font-bold tracking-[0.3em] uppercase mb-2">The Pillars</p>
+              <h2 className="font-heading text-3xl sm:text-5xl text-charcoal font-bold">What Guides Us</h2>
+            </div>
+          </ScrollReveal>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+            {values.map((v, i) => (
+              <ScrollReveal key={v.title} delay={i * 0.08}>
+                <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-lg shadow-charcoal/5 border border-charcoal/5 h-full flex flex-col justify-between hover:-translate-y-1 transition-all duration-300">
+                  <div>
+                    <div className="w-12 h-12 rounded-2xl bg-cream flex items-center justify-center text-2xl mb-5 shadow-inner">
+                      {v.icon}
+                    </div>
+                    <h3 className="font-heading text-lg sm:text-xl text-charcoal font-bold mb-2">{v.title}</h3>
+                    <p className="text-charcoal/65 text-xs sm:text-sm leading-relaxed">{v.desc}</p>
+                  </div>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Call to Action ──────────────────────────────── */}
+      <section className="py-16 sm:py-24 px-5 sm:px-8 lg:px-10 bg-charcoal text-white text-center">
+        <div className="max-w-3xl mx-auto">
+          <ScrollReveal>
+            <h2 className="font-heading text-2xl sm:text-4xl md:text-5xl font-bold mb-4 leading-tight">
+              Experience the Touch of True Knitwear
+            </h2>
+            <p className="text-cream/70 text-xs sm:text-base max-w-xl mx-auto mb-8">
+              Explore our latest Men&apos;s and Women&apos;s collections crafted for lifetime comfort.
+            </p>
+            <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 max-w-xs sm:max-w-none mx-auto">
+              <Link
+                href="/men"
+                className="bg-rust hover:bg-rust-dark text-white px-8 py-4 text-xs font-bold tracking-widest uppercase rounded-full transition-all shadow-xl shadow-rust/30 hover:scale-102"
+              >
+                Shop Men&apos;s →
+              </Link>
+              <Link
+                href="/women"
+                className="bg-white/15 hover:bg-white/25 text-white border border-white/20 px-8 py-4 text-xs font-bold tracking-widest uppercase rounded-full transition-all backdrop-blur-md"
+              >
+                Shop Women&apos;s →
+              </Link>
             </div>
           </ScrollReveal>
         </div>

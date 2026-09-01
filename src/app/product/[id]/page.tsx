@@ -3,7 +3,7 @@
 import { useState, use } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { getProductById, products, Review } from "@/data/products";
+import { getProductById, getProductsByCategory, products, Review } from "@/data/products";
 import { useCart } from "@/context/CartContext";
 import ScrollReveal from "@/components/ScrollReveal";
 import ProductCard from "@/components/ProductCard";
@@ -14,6 +14,11 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
   const product = getProductById(id);
 
   if (!product) return notFound();
+
+  const categoryProducts = getProductsByCategory(product.category);
+  const currentIndex = categoryProducts.findIndex((p) => p.id === product.id);
+  const prevProduct = categoryProducts[(currentIndex - 1 + categoryProducts.length) % categoryProducts.length];
+  const nextProduct = categoryProducts[(currentIndex + 1) % categoryProducts.length];
 
   const [activeImg, setActiveImg] = useState(0);
   const [selColor, setSelColor] = useState(product.colors[0]?.name ?? "");
@@ -65,8 +70,8 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
 
   return (
     <>
-      {/* Breadcrumb */}
-      <div className="pt-28 pb-4 px-5 sm:px-8 lg:px-10 max-w-7xl mx-auto">
+      {/* Breadcrumb & Next/Prev Header Bar */}
+      <div className="pt-28 pb-4 px-5 sm:px-8 lg:px-10 max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-charcoal/5">
         <nav className="flex items-center gap-2 text-xs text-charcoal/50">
           <Link href="/" className="hover:text-rust transition-colors">Home</Link>
           <span>/</span>
@@ -76,10 +81,37 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
           <span>/</span>
           <span className="text-charcoal/80 font-medium">{product.name}</span>
         </nav>
+
+        {/* Previous / Next Product Navigation */}
+        <div className="flex items-center gap-4 text-xs font-bold uppercase tracking-wider text-charcoal">
+          {prevProduct && (
+            <Link
+              href={`/product/${prevProduct.id}`}
+              className="flex items-center gap-1.5 hover:text-rust transition-colors py-1 px-2.5 rounded-lg hover:bg-cream/60 group"
+              title={prevProduct.name}
+            >
+              <span className="text-rust group-hover:-translate-x-0.5 transition-transform">←</span>
+              <span className="hidden md:inline text-charcoal/60 font-medium">Prev:</span>
+              <span className="max-w-[120px] truncate">{prevProduct.name}</span>
+            </Link>
+          )}
+          <span className="text-charcoal/20">|</span>
+          {nextProduct && (
+            <Link
+              href={`/product/${nextProduct.id}`}
+              className="flex items-center gap-1.5 hover:text-rust transition-colors py-1 px-2.5 rounded-lg hover:bg-cream/60 group"
+              title={nextProduct.name}
+            >
+              <span className="hidden md:inline text-charcoal/60 font-medium">Next:</span>
+              <span className="max-w-[120px] truncate">{nextProduct.name}</span>
+              <span className="text-rust group-hover:translate-x-0.5 transition-transform">→</span>
+            </Link>
+          )}
+        </div>
       </div>
 
       {/* Main Product Section */}
-      <section className="pb-16 sm:pb-24 px-5 sm:px-8 lg:px-10">
+      <section className="py-8 sm:py-14 px-5 sm:px-8 lg:px-10">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14">
           {/* Gallery Column */}
           <div className="lg:col-span-7">
@@ -494,7 +526,44 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
         </div>
       </section>
 
-      {/* Size Chart Modal (if triggered directly) */}
+      {/* Next/Prev Large Card Navigation Banner */}
+      <section className="py-12 px-5 sm:px-8 lg:px-10 bg-cream/40 border-t border-charcoal/5">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {prevProduct && (
+            <Link
+              href={`/product/${prevProduct.id}`}
+              className="bg-white p-5 rounded-2xl border border-charcoal/10 flex items-center gap-4 hover:border-rust transition-all group shadow-sm hover:shadow-md"
+            >
+              <div className="w-14 h-18 rounded-xl overflow-hidden bg-cream flex-shrink-0">
+                <img src={prevProduct.images[0]} alt={prevProduct.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
+              </div>
+              <div className="min-w-0">
+                <p className="text-[10px] font-bold tracking-widest uppercase text-rust mb-0.5">← Previous Piece</p>
+                <h4 className="font-heading font-bold text-sm text-charcoal truncate">{prevProduct.name}</h4>
+                <p className="text-xs text-charcoal/50 font-medium">₹{prevProduct.price}</p>
+              </div>
+            </Link>
+          )}
+
+          {nextProduct && (
+            <Link
+              href={`/product/${nextProduct.id}`}
+              className="bg-white p-5 rounded-2xl border border-charcoal/10 flex items-center justify-between sm:justify-end gap-4 hover:border-rust transition-all group shadow-sm hover:shadow-md sm:text-right"
+            >
+              <div className="min-w-0 order-2 sm:order-1">
+                <p className="text-[10px] font-bold tracking-widest uppercase text-rust mb-0.5">Next Piece →</p>
+                <h4 className="font-heading font-bold text-sm text-charcoal truncate">{nextProduct.name}</h4>
+                <p className="text-xs text-charcoal/50 font-medium">₹{nextProduct.price}</p>
+              </div>
+              <div className="w-14 h-18 rounded-xl overflow-hidden bg-cream flex-shrink-0 order-1 sm:order-2">
+                <img src={nextProduct.images[0]} alt={nextProduct.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
+              </div>
+            </Link>
+          )}
+        </div>
+      </section>
+
+      {/* Size Chart Modal */}
       <AnimatePresence>
         {showSizeModal && (
           <motion.div
