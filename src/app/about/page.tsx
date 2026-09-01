@@ -6,7 +6,7 @@ import ScrollReveal from "@/components/ScrollReveal";
 const values = [
   {
     title: "Quality Materials",
-    desc: "We source only the finest natural fibres — merino wool, cashmere, alpaca, and organic cotton — from ethical suppliers we trust.",
+    desc: "We source only the finest natural fibres — combed cotton, merino wool, cashmere, and breathable knits — from ethical suppliers we trust.",
     icon: (
       <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
@@ -24,7 +24,7 @@ const values = [
   },
   {
     title: "Sustainable Practice",
-    desc: "Small-batch production to minimise waste, biodegradable packaging, and a commitment to ethical sourcing.",
+    desc: "Small-batch production to minimise waste, biodegradable packaging, and a commitment to ethical sourcing across all lines.",
     icon: (
       <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
@@ -34,12 +34,12 @@ const values = [
 ];
 
 const gallery = [
-  "/products/cord-sets/01.jpg",
-  "/products/butterfly/01.jpg",
-  "/products/day-dream-hoodie/01.jpg",
-  "/products/racing-hoodie/01.jpg",
+  "/products/cord-sets/05.jpg",
+  "/products/butterfly/02.jpg",
+  "/products/day-dream-hoodie/02.jpg",
+  "/products/racing-hoodie/02.jpg",
   "/products/cargo-girls/01.jpg",
-  "/products/game-over-hoodie-girls/01.jpg",
+  "/products/game-over-hoodie-girls/02.jpg",
 ];
 
 export default function AboutPage() {
@@ -62,8 +62,8 @@ export default function AboutPage() {
       <section className="py-24 sm:py-32 px-5 sm:px-8 lg:px-10">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           <ScrollReveal direction="left">
-            <div className="rounded-2xl overflow-hidden aspect-[4/3]">
-              <img src="/products/magknit-wording/01.jpg" alt="Workshop" className="w-full h-full object-cover" />
+            <div className="rounded-2xl overflow-hidden aspect-[4/3] shadow-lg">
+              <img src="/products/acid-wash-boys-washing/02.jpg" alt="Workshop" className="w-full h-full object-cover" />
             </div>
           </ScrollReveal>
           <ScrollReveal direction="right">
@@ -114,7 +114,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
             {gallery.map((img, i) => (
               <ScrollReveal key={i} delay={i * 0.08}>
-                <div className="rounded-xl overflow-hidden aspect-[4/5] group">
+                <div className="rounded-xl overflow-hidden aspect-[4/5] group shadow-md">
                   <img src={img} alt="NorthBrook" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                 </div>
               </ScrollReveal>

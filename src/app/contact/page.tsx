@@ -22,7 +22,7 @@ export default function ContactPage() {
   return (
     <>
       <section className="relative min-h-[35vh] flex items-center justify-center overflow-hidden bg-charcoal">
-        <img src="/products/cord-sets/01.jpg" alt="" className="absolute inset-0 w-full h-full object-cover opacity-30" />
+        <img src="/products/cord-sets/05.jpg" alt="Contact NorthBrook" className="absolute inset-0 w-full h-full object-cover opacity-30" />
         <div className="absolute inset-0 bg-gradient-to-b from-charcoal/60 to-charcoal/80" />
         <div className="relative z-10 text-center px-5">
           <motion.p initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="text-cream/60 text-xs font-semibold tracking-[0.3em] uppercase mb-3">Get in Touch</motion.p>
@@ -45,16 +45,16 @@ export default function ContactPage() {
                       </div>
                       <div>
                         <label className="block text-xs font-semibold tracking-widest uppercase text-charcoal/50 mb-2">Phone</label>
-                        <input type="tel" name="phone" value={form.phone} onChange={onChange} className="w-full px-4 py-3.5 bg-cream/50 border border-cream-dark rounded-xl text-charcoal placeholder:text-charcoal/30 text-sm focus:outline-none focus:ring-2 focus:ring-rust/30 focus:border-rust transition" placeholder="Your phone number" />
+                        <input type="tel" name="phone" value={form.phone} onChange={onChange} className="w-full px-4 py-3.5 bg-cream/50 border border-cream-dark rounded-xl text-charcoal placeholder:text-charcoal/30 text-sm focus:outline-none focus:ring-2 focus:ring-rust/30 focus:border-rust transition" placeholder="9992442999" />
                       </div>
                     </div>
                     <div>
                       <label className="block text-xs font-semibold tracking-widest uppercase text-charcoal/50 mb-2">Email *</label>
-                      <input type="email" name="email" value={form.email} onChange={onChange} required className="w-full px-4 py-3.5 bg-cream/50 border border-cream-dark rounded-xl text-charcoal placeholder:text-charcoal/30 text-sm focus:outline-none focus:ring-2 focus:ring-rust/30 focus:border-rust transition" placeholder="your@email.com" />
+                      <input type="email" name="email" value={form.email} onChange={onChange} required className="w-full px-4 py-3.5 bg-cream/50 border border-cream-dark rounded-xl text-charcoal placeholder:text-charcoal/30 text-sm focus:outline-none focus:ring-2 focus:ring-rust/30 focus:border-rust transition" placeholder="northbrook.official@gmail.com" />
                     </div>
                     <div>
                       <label className="block text-xs font-semibold tracking-widest uppercase text-charcoal/50 mb-2">Message *</label>
-                      <textarea name="message" value={form.message} onChange={onChange} required rows={5} className="w-full px-4 py-3.5 bg-cream/50 border border-cream-dark rounded-xl text-charcoal placeholder:text-charcoal/30 text-sm focus:outline-none focus:ring-2 focus:ring-rust/30 focus:border-rust transition resize-none" placeholder="Tell us how we can help..." />
+                      <textarea name="message" value={form.message} onChange={onChange} required rows={5} className="w-full px-4 py-3.5 bg-cream/50 border border-cream-dark rounded-xl text-charcoal placeholder:text-charcoal/30 text-sm focus:outline-none focus:ring-2 focus:ring-rust/30 focus:border-rust transition resize-none" placeholder="Tell us how we can help with your order or inquiry..." />
                     </div>
                     <button type="submit" disabled={pending} className="w-full bg-charcoal text-white py-4 text-sm font-semibold tracking-wider uppercase rounded-xl hover:bg-rust transition-colors duration-300 shadow-lg shadow-charcoal/20 disabled:opacity-60">
                       {pending ? "Sending..." : "Send Message"}
@@ -66,7 +66,7 @@ export default function ContactPage() {
                       <svg className="w-8 h-8 text-rust" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
                     </div>
                     <h3 className="font-heading text-2xl text-charcoal font-bold mb-3">Message Sent!</h3>
-                    <p className="text-charcoal/50 mb-6">Thank you. We&apos;ll get back to you within 24 hours.</p>
+                    <p className="text-charcoal/50 mb-6">Thank you for reaching out to NorthBrook. We&apos;ll get back to you shortly.</p>
                     <button onClick={() => { setSubmitted(false); setForm({ name: "", phone: "", email: "", message: "" }); }} className="text-rust text-xs tracking-widest uppercase font-semibold hover:text-rust-dark transition">Send Another</button>
                   </motion.div>
                 )}
@@ -79,43 +79,66 @@ export default function ContactPage() {
             <ScrollReveal direction="right">
               <div className="space-y-6">
                 <div className="bg-white rounded-2xl p-8 shadow-lg shadow-charcoal/5">
-                  <h3 className="font-heading text-lg text-charcoal font-bold mb-5">Contact Details</h3>
-                  <div className="space-y-4">
-                    <div>
-                      <p className="text-[10px] font-semibold tracking-widest uppercase text-rust mb-1">Phone</p>
-                      <a href="tel:+1234567890" className="text-charcoal hover:text-rust transition text-sm">+1 (234) 567-890</a>
+                  <h3 className="font-heading text-xl text-charcoal font-bold mb-6">Direct Contact</h3>
+                  <div className="space-y-5">
+                    <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 rounded-full bg-rust/10 flex items-center justify-center text-rust flex-shrink-0 mt-0.5">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <p className="text-[10px] font-semibold tracking-widest uppercase text-rust mb-0.5">Phone & Support</p>
+                        <a href="tel:+919992442999" className="text-charcoal font-semibold hover:text-rust transition text-base block">
+                          +91 99924 42999
+                        </a>
+                        <p className="text-charcoal/40 text-xs mt-0.5">Direct line / WhatsApp support</p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-[10px] font-semibold tracking-widest uppercase text-rust mb-1">Email</p>
-                      <a href="mailto:hello@northbrook.com" className="text-charcoal hover:text-rust transition text-sm">hello@northbrook.com</a>
+
+                    <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 rounded-full bg-rust/10 flex items-center justify-center text-rust flex-shrink-0 mt-0.5">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                        </svg>
+                      </div>
+                      <div>
+                        <p className="text-[10px] font-semibold tracking-widest uppercase text-rust mb-0.5">Official Email</p>
+                        <a href="mailto:northbrook.official@gmail.com" className="text-charcoal font-semibold hover:text-rust transition text-sm break-all block">
+                          northbrook.official@gmail.com
+                        </a>
+                        <p className="text-charcoal/40 text-xs mt-0.5">Replies within 24 hours</p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-[10px] font-semibold tracking-widest uppercase text-rust mb-1">Instagram</p>
-                      <a href="https://instagram.com/northbrook" target="_blank" rel="noopener noreferrer" className="text-charcoal hover:text-rust transition text-sm">@northbrook</a>
+
+                    <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 rounded-full bg-rust/10 flex items-center justify-center text-rust flex-shrink-0 mt-0.5">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <p className="text-[10px] font-semibold tracking-widest uppercase text-rust mb-0.5">Working Hours</p>
+                        <p className="text-charcoal text-sm font-medium">Monday — Saturday: 9:00 AM — 7:00 PM</p>
+                        <p className="text-charcoal/40 text-xs mt-0.5">Sunday: Closed</p>
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-white rounded-2xl p-8 shadow-lg shadow-charcoal/5">
-                  <h4 className="text-xs font-semibold tracking-widest uppercase text-charcoal/50 mb-3">Business Hours</h4>
-                  <div className="text-sm text-charcoal/60 space-y-1">
-                    <p>Monday — Friday: 9am — 6pm</p>
-                    <p>Saturday: 10am — 4pm</p>
-                    <p>Sunday: Closed</p>
-                  </div>
-                </div>
-
-                {/* Map placeholder */}
-                <div className="bg-white rounded-2xl overflow-hidden shadow-lg shadow-charcoal/5">
-                  <div className="h-48 bg-cream-dark flex items-center justify-center">
-                    <div className="text-center">
-                      <svg className="w-8 h-8 text-charcoal/20 mx-auto mb-2" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
-                      </svg>
-                      <p className="text-charcoal/30 text-xs">Map coming soon</p>
-                    </div>
-                  </div>
+                <div className="bg-charcoal text-white rounded-2xl p-8 shadow-lg">
+                  <h4 className="font-heading text-lg font-bold mb-2">Have a Bulk or Custom Order?</h4>
+                  <p className="text-cream/60 text-xs leading-relaxed mb-4">
+                    For studio collaborations, bulk knitwear orders, or custom sizing inquiries, reach out directly to our family team via WhatsApp or phone.
+                  </p>
+                  <a
+                    href="https://wa.me/919992442999"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-rust hover:bg-rust-dark text-white px-5 py-3 text-xs font-bold tracking-wider uppercase rounded-xl transition-all"
+                  >
+                    Chat on WhatsApp →
+                  </a>
                 </div>
               </div>
             </ScrollReveal>

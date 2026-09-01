@@ -21,7 +21,6 @@ export default function ProductCard({ id, name, price, originalPrice, images, ba
   const [modalOpen, setModalOpen] = useState(false);
   const [selColor, setSelColor] = useState(colors[0]?.name ?? "");
   const [selSize, setSelSize] = useState(sizes[0] ?? "");
-  const [imgIdx, setImgIdx] = useState(0);
   const { addItem } = useCart();
 
   const badgeStyle: Record<string, string> = {
@@ -30,7 +29,8 @@ export default function ProductCard({ id, name, price, originalPrice, images, ba
     "Best Seller": "bg-charcoal/80 text-white",
   };
 
-  const thumb = images[0] || "/products/butterfly/01.jpg";
+  const mainThumb = images[0] || "/products/butterfly/02.jpg";
+  const hoverThumb = images[1] || mainThumb;
 
   return (
     <>
@@ -43,20 +43,36 @@ export default function ProductCard({ id, name, price, originalPrice, images, ba
       >
         {/* Image — links to detail page */}
         <Link href={`/product/${id}`} className="block">
-          <div className="relative aspect-[3/4] rounded-xl overflow-hidden bg-cream-dark">
+          <div className="relative aspect-[3/4] rounded-2xl overflow-hidden bg-cream-dark shadow-sm group-hover:shadow-lg transition-shadow duration-300">
+            {/* Front default image */}
             <img
-              src={thumb}
+              src={mainThumb}
               alt={name}
-              className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+              className={`w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-105 ${
+                hovered && images[1] ? "opacity-0" : "opacity-100"
+              }`}
             />
+
+            {/* Back/alternate angle on hover */}
+            {images[1] && (
+              <img
+                src={hoverThumb}
+                alt={`${name} alternate view`}
+                className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-105 ${
+                  hovered ? "opacity-100" : "opacity-0"
+                }`}
+              />
+            )}
+
             {badge && (
               <span className={`absolute top-3 left-3 px-3 py-1.5 text-[10px] font-semibold tracking-widest uppercase ${badgeStyle[badge]} rounded-full shadow-sm z-10`}>
                 {badge}
               </span>
             )}
+
             {/* Hover overlay */}
             <motion.div initial={false} animate={{ opacity: hovered ? 1 : 0 }} className="absolute inset-0 bg-black/20 flex items-end justify-center pb-6 z-10">
-              <span className="bg-white text-charcoal px-7 py-3 text-xs font-semibold tracking-widest uppercase rounded-full shadow-lg">
+              <span className="bg-white text-charcoal px-6 py-2.5 text-xs font-semibold tracking-widest uppercase rounded-full shadow-lg hover:bg-rust hover:text-white transition-colors">
                 View Details
               </span>
             </motion.div>
@@ -71,7 +87,7 @@ export default function ProductCard({ id, name, price, originalPrice, images, ba
             ))}
           </div>
           <Link href={`/product/${id}`}>
-            <h3 className="text-charcoal text-sm font-medium leading-snug hover:text-rust transition-colors">{name}</h3>
+            <h3 className="text-charcoal text-sm font-medium leading-snug hover:text-rust transition-colors line-clamp-1">{name}</h3>
           </Link>
           <div className="flex items-center gap-2 mt-1">
             <span className="text-charcoal font-bold">₹{price}</span>
@@ -86,7 +102,7 @@ export default function ProductCard({ id, name, price, originalPrice, images, ba
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[80] flex items-center justify-center p-4" onClick={() => setModalOpen(false)}>
             <motion.div initial={{ scale: 0.92, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.92, opacity: 0 }} onClick={(e) => e.stopPropagation()} className="bg-cream rounded-2xl max-w-lg w-full overflow-hidden shadow-2xl">
               <div className="relative h-64">
-                <img src={thumb} alt={name} className="w-full h-full object-cover" />
+                <img src={mainThumb} alt={name} className="w-full h-full object-cover" />
                 <button onClick={() => setModalOpen(false)} className="absolute top-4 right-4 w-9 h-9 bg-white/90 backdrop-blur rounded-full flex items-center justify-center text-charcoal hover:bg-white transition shadow-md">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
                 </button>
@@ -115,7 +131,7 @@ export default function ProductCard({ id, name, price, originalPrice, images, ba
                 </div>
 
                 <button
-                  onClick={() => { addItem({ id, name, price, image: thumb, color: selColor, size: selSize }); setModalOpen(false); }}
+                  onClick={() => { addItem({ id, name, price, image: mainThumb, color: selColor, size: selSize }); setModalOpen(false); }}
                   className="w-full bg-charcoal text-white py-4 text-sm font-semibold tracking-wider uppercase rounded-xl hover:bg-rust transition-colors duration-300 shadow-lg shadow-charcoal/20"
                 >
                   Add to Bag

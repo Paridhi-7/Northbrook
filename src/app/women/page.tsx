@@ -9,14 +9,14 @@ import { getProductsByCategory } from "@/data/products";
 const filters = ["All", "New", "Sale", "Best Seller"];
 
 export default function WomenPage() {
-  const all = [...getProductsByCategory("women"), ...getProductsByCategory("unisex")];
+  const all = getProductsByCategory("women");
   const [active, setActive] = useState("All");
   const filtered = active === "All" ? all : all.filter((p) => p.badge === active);
 
   return (
     <>
       <section className="relative min-h-[40vh] flex items-center justify-center overflow-hidden bg-charcoal">
-        <img src="/products/butterfly/01.jpg" alt="" className="absolute inset-0 w-full h-full object-cover opacity-40" />
+        <img src="/products/butterfly/02.jpg" alt="Women's Collection" className="absolute inset-0 w-full h-full object-cover opacity-40" />
         <div className="absolute inset-0 bg-gradient-to-b from-charcoal/60 to-charcoal/80" />
         <div className="relative z-10 text-center px-5">
           <motion.p initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="text-cream/60 text-xs font-semibold tracking-[0.3em] uppercase mb-3">Women&apos;s Collection</motion.p>
