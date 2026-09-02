@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useState } from "react";
 import Link from "next/link";
 import ScrollReveal from "@/components/ScrollReveal";
 import ProductCard from "@/components/ProductCard";
@@ -25,6 +26,23 @@ const womenSlides = [
 
 export default function HomePage() {
   const bestSellers = getBestSellers();
+  const [email, setEmail] = useState("");
+  const [subState, setSubState] = useState<"idle" | "loading" | "success">("idle");
+  const [emailError, setEmailError] = useState("");
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email.trim() || !/^[^@]+@[^@]+\.[^@]+$/.test(email)) {
+      setEmailError("Please enter a valid email address");
+      return;
+    }
+    setEmailError("");
+    setSubState("loading");
+    // Simulate a short API call
+    await new Promise((r) => setTimeout(r, 700));
+    setSubState("success");
+    setEmail("");
+  };
 
   return (
     <>
@@ -231,19 +249,65 @@ export default function HomePage() {
             <p className="text-cream/60 mb-8 max-w-lg mx-auto text-xs sm:text-base">
               Exclusive updates, early access to new seasonal drops, and a 10% welcome discount on your first order.
             </p>
-            <form onSubmit={(e) => e.preventDefault()} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
               <input
+                id="newsletter-email-input"
                 type="email"
+                value={email}
+                onChange={(e) => { setEmail(e.target.value); setEmailError(""); }}
                 placeholder="Your email address"
-                className="flex-1 px-5 py-3.5 bg-white/10 border border-white/15 text-white placeholder:text-white/40 text-sm rounded-full focus:outline-none focus:border-rust focus:ring-1 focus:ring-rust transition"
+                disabled={subState === "success"}
+                className={`flex-1 px-5 py-3.5 bg-white/10 border text-white placeholder:text-white/40 text-sm rounded-full focus:outline-none transition ${
+                  emailError ? "border-red-400" : "border-white/15 focus:border-rust focus:ring-1 focus:ring-rust"
+                } disabled:opacity-50`}
               />
-              <button
+              <motion.button
+                id="newsletter-subscribe-btn"
                 type="submit"
-                className="px-7 py-3.5 bg-rust text-white text-xs font-bold tracking-widest uppercase rounded-full hover:bg-rust-dark transition-colors shadow-lg shadow-rust/30"
+                whileTap={{ scale: 0.96 }}
+                disabled={subState !== "idle"}
+                className={`px-7 py-3.5 text-xs font-bold tracking-widest uppercase rounded-full transition-all duration-500 shadow-lg flex items-center justify-center gap-2 min-w-[130px] ${
+                  subState === "success"
+                    ? "bg-emerald-500 text-white shadow-emerald-500/30"
+                    : subState === "loading"
+                    ? "bg-rust/70 text-white cursor-not-allowed"
+                    : "bg-rust text-white hover:bg-rust-dark shadow-rust/30"
+                }`}
               >
-                Subscribe
-              </button>
+                {subState === "loading" ? (
+                  <>
+                    <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                    </svg>
+                    Subscribing…
+                  </>
+                ) : subState === "success" ? (
+                  <motion.span
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="flex items-center gap-1.5"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    </svg>
+                    Subscribed!
+                  </motion.span>
+                ) : "Subscribe"}
+              </motion.button>
             </form>
+            {emailError && (
+              <p className="text-red-400 text-xs mt-3 font-medium">{emailError}</p>
+            )}
+            {subState === "success" && (
+              <motion.p
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-emerald-400 text-xs mt-3 font-semibold"
+              >
+                🎉 You&apos;re in! Check your inbox for your 10% welcome discount.
+              </motion.p>
+            )}
           </ScrollReveal>
         </div>
       </section>

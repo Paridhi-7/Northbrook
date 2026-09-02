@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/context/CartContext";
+import { getAllProducts, Product } from "@/data/products";
 
 const links = [
   { href: "/", label: "Home" },
@@ -17,8 +18,16 @@ const links = [
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState<Product[]>([]);
   const pathname = usePathname();
+  const router = useRouter();
   const { totalItems, setIsOpen } = useCart();
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const searchContainerRef = useRef<HTMLDivElement>(null);
+
+  const allProducts = getAllProducts();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -27,6 +36,57 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => setMobileOpen(false), [pathname]);
+
+  // Focus input when search opens
+  useEffect(() => {
+    if (searchOpen) {
+      setTimeout(() => searchInputRef.current?.focus(), 100);
+    } else {
+      setSearchQuery("");
+      setSearchResults([]);
+    }
+  }, [searchOpen]);
+
+  // Live search filtering
+  useEffect(() => {
+    if (!searchQuery.trim()) {
+      setSearchResults([]);
+      return;
+    }
+    const q = searchQuery.toLowerCase();
+    const results = allProducts.filter(
+      (p) =>
+        p.name.toLowerCase().includes(q) ||
+        p.subcategory.toLowerCase().includes(q) ||
+        p.category.toLowerCase().includes(q)
+    );
+    setSearchResults(results.slice(0, 6));
+  }, [searchQuery]);
+
+  // Close search on ESC
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSearchOpen(false);
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, []);
+
+  // Close on click outside
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(e.target as Node)) {
+        setSearchOpen(false);
+      }
+    };
+    if (searchOpen) document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [searchOpen]);
+
+  const handleResultClick = (id: string) => {
+    setSearchOpen(false);
+    router.push(`/product/${id}`);
+  };
 
   return (
     <motion.header
@@ -80,10 +140,10 @@ export default function Navbar() {
               })}
             </nav>
 
-            {/* Right Action Icons (Cart & Mobile Toggle) */}
+            {/* Right Action Icons */}
             <div className="flex items-center gap-3">
               {/* Quick Collection Badges for Desktop */}
-              <div className="hidden lg:flex items-center gap-2 mr-2">
+              <div className="hidden lg:flex items-center gap-2 mr-1">
                 <Link
                   href="/men"
                   className="text-[11px] font-bold tracking-wider uppercase text-white/70 hover:text-white bg-white/5 hover:bg-white/10 px-3 py-1.5 rounded-lg border border-white/10 transition-all"
@@ -97,6 +157,21 @@ export default function Navbar() {
                   Women
                 </Link>
               </div>
+
+              {/* Search Button */}
+              <button
+                onClick={() => setSearchOpen(!searchOpen)}
+                className={`p-2.5 sm:p-3 rounded-full border transition-all duration-300 group shadow-md ${
+                  searchOpen
+                    ? "bg-rust text-white border-rust"
+                    : "bg-white/10 hover:bg-rust text-white border-white/15 hover:border-rust"
+                }`}
+                aria-label="Search Products"
+              >
+                <svg className="w-5 h-5 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                </svg>
+              </button>
 
               {/* Shopping Bag Button */}
               <button
@@ -142,6 +217,108 @@ export default function Navbar() {
         </div>
       </div>
 
+      {/* ── Search Overlay Panel ─────────────────────────── */}
+      <AnimatePresence>
+        {searchOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="bg-charcoal/98 border-b border-white/10 backdrop-blur-2xl shadow-2xl"
+          >
+            <div className="max-w-3xl mx-auto px-5 sm:px-8 py-5" ref={searchContainerRef}>
+              {/* Search Input */}
+              <div className="relative flex items-center gap-3">
+                <svg className="absolute left-4 w-5 h-5 text-white/40 pointer-events-none" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                </svg>
+                <input
+                  ref={searchInputRef}
+                  id="navbar-search-input"
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search tees, hoodies, cargo…"
+                  className="w-full pl-12 pr-12 py-3.5 bg-white/8 border border-white/15 rounded-2xl text-white placeholder:text-white/35 text-sm font-medium focus:outline-none focus:border-rust focus:ring-1 focus:ring-rust transition-all"
+                />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery("")}
+                    className="absolute right-4 w-5 h-5 rounded-full bg-white/20 flex items-center justify-center text-white/70 hover:bg-white/30 transition"
+                  >
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                )}
+              </div>
+
+              {/* Search Results */}
+              <AnimatePresence>
+                {searchQuery.trim() && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.15 }}
+                    className="mt-4"
+                  >
+                    {searchResults.length > 0 ? (
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        {searchResults.map((product) => (
+                          <button
+                            key={product.id}
+                            onClick={() => handleResultClick(product.id)}
+                            className="flex items-center gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/12 border border-white/8 hover:border-rust/40 transition-all text-left group"
+                          >
+                            <div className="w-12 h-14 rounded-xl overflow-hidden flex-shrink-0 bg-white/10">
+                              <img
+                                src={product.images[0]}
+                                alt={product.name}
+                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                              />
+                            </div>
+                            <div className="min-w-0">
+                              <p className="text-white text-xs font-bold truncate group-hover:text-rust transition-colors">{product.name}</p>
+                              <p className="text-white/40 text-[11px] font-medium capitalize">{product.category} · {product.subcategory}</p>
+                              <p className="text-rust-light text-xs font-bold mt-0.5">₹{product.price}</p>
+                            </div>
+                            <svg className="w-4 h-4 text-white/25 group-hover:text-rust ml-auto flex-shrink-0 transition-colors" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                            </svg>
+                          </button>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="text-center py-8">
+                        <p className="text-white/40 text-sm">No products found for &ldquo;{searchQuery}&rdquo;</p>
+                        <p className="text-white/25 text-xs mt-1">Try searching for tees, hoodies, cargo, etc.</p>
+                      </div>
+                    )}
+                    {searchResults.length > 0 && (
+                      <p className="text-white/30 text-[11px] text-right mt-3 font-medium">
+                        {searchResults.length} result{searchResults.length !== 1 ? "s" : ""} · Press ESC to close
+                      </p>
+                    )}
+                  </motion.div>
+                )}
+                {!searchQuery.trim() && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="mt-4 flex items-center justify-between"
+                  >
+                    <p className="text-white/30 text-xs font-medium">Popular: Hoodies, Acid Wash, Cargo, Tees</p>
+                    <p className="text-white/20 text-[11px]">ESC to close</p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Mobile Animated Slide-Over Menu */}
       <AnimatePresence>
         {mobileOpen && (
@@ -171,6 +348,33 @@ export default function Navbar() {
                   </Link>
                 );
               })}
+
+              {/* Track Order link in mobile */}
+              <Link
+                href="/track-order"
+                className={`flex items-center justify-between py-3.5 px-4 rounded-2xl text-sm font-bold tracking-widest uppercase transition-all ${
+                  pathname === "/track-order"
+                    ? "bg-rust text-white shadow-lg shadow-rust/20"
+                    : "text-white/85 hover:text-white hover:bg-white/10"
+                }`}
+              >
+                <span>Track Order</span>
+                <span className="text-xs opacity-60">→</span>
+              </Link>
+
+              {/* Mobile search button */}
+              <button
+                onClick={() => { setMobileOpen(false); setTimeout(() => setSearchOpen(true), 300); }}
+                className="w-full flex items-center justify-between py-3.5 px-4 rounded-2xl text-sm font-bold tracking-widest uppercase text-white/85 hover:text-white hover:bg-white/10 transition-all"
+              >
+                <span className="flex items-center gap-2">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                  </svg>
+                  Search
+                </span>
+                <span className="text-xs opacity-60">→</span>
+              </button>
 
               <div className="pt-6 mt-4 border-t border-white/10 space-y-3">
                 <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/50">Direct Contact</p>

@@ -8,6 +8,7 @@ const shop = [
 const company = [
   { label: "About Us", href: "/about" },
   { label: "Contact", href: "/contact" },
+  { label: "Track Order", href: "/track-order" },
 ];
 const policies = [
   { label: "Terms & Conditions", href: "/terms" },

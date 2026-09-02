@@ -29,7 +29,27 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
   const [reviewsList, setReviewsList] = useState<Review[]>(product.reviews || []);
   const [newReview, setNewReview] = useState({ name: "", rating: 5, title: "", comment: "" });
   const [reviewSubmitted, setReviewSubmitted] = useState(false);
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
   const { addItem } = useCart();
+
+  const totalImages = product.images.length;
+
+  const goToPrev = () => setActiveImg((i) => (i - 1 + totalImages) % totalImages);
+  const goToNext = () => setActiveImg((i) => (i + 1) % totalImages);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStartX(e.changedTouches[0].clientX);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX === null) return;
+    const deltaX = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(deltaX) > 50) {
+      if (deltaX < 0) goToNext();
+      else goToPrev();
+    }
+    setTouchStartX(null);
+  };
 
   const handleAdd = () => {
     addItem({
@@ -115,25 +135,59 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14">
           {/* Gallery Column */}
           <div className="lg:col-span-7">
-            {/* Main image */}
-            <motion.div
-              key={activeImg}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3 }}
-              className="relative aspect-[3/4] rounded-3xl overflow-hidden bg-cream-dark mb-4 shadow-lg border border-charcoal/5"
-            >
-              <img
-                src={product.images[activeImg] || product.images[0]}
-                alt={product.name}
-                className="w-full h-full object-cover"
-              />
-              {product.badge && (
-                <span className={`absolute top-5 left-5 px-3.5 py-1.5 text-[10px] font-bold tracking-widest uppercase ${product.badge === "Sale" ? "bg-rust text-white" : product.badge === "New" ? "bg-charcoal text-white" : "bg-charcoal/90 text-white"} rounded-full shadow-md z-10`}>
-                  {product.badge}
-                </span>
+            {/* Main image with arrow nav + swipe support */}
+            <div className="relative">
+              <motion.div
+                key={activeImg}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
+                className="relative aspect-[3/4] rounded-3xl overflow-hidden bg-cream-dark mb-4 shadow-lg border border-charcoal/5"
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd}
+              >
+                <img
+                  src={product.images[activeImg] || product.images[0]}
+                  alt={product.name}
+                  className="w-full h-full object-cover pointer-events-none"
+                />
+                {product.badge && (
+                  <span className={`absolute top-5 left-5 px-3.5 py-1.5 text-[10px] font-bold tracking-widest uppercase ${product.badge === "Sale" ? "bg-rust text-white" : product.badge === "New" ? "bg-charcoal text-white" : "bg-charcoal/90 text-white"} rounded-full shadow-md z-10`}>
+                    {product.badge}
+                  </span>
+                )}
+                {/* Image counter */}
+                <div className="absolute bottom-4 right-5 bg-black/40 backdrop-blur-sm text-white/80 text-[11px] font-bold px-3 py-1 rounded-full">
+                  {activeImg + 1} / {totalImages}
+                </div>
+              </motion.div>
+
+              {/* Left Arrow */}
+              {totalImages > 1 && (
+                <button
+                  onClick={goToPrev}
+                  aria-label="Previous image"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/85 hover:bg-white backdrop-blur-sm shadow-lg border border-charcoal/10 flex items-center justify-center text-charcoal hover:text-rust transition-all duration-200 group z-10"
+                >
+                  <svg className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                  </svg>
+                </button>
               )}
-            </motion.div>
+
+              {/* Right Arrow */}
+              {totalImages > 1 && (
+                <button
+                  onClick={goToNext}
+                  aria-label="Next image"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/85 hover:bg-white backdrop-blur-sm shadow-lg border border-charcoal/10 flex items-center justify-center text-charcoal hover:text-rust transition-all duration-200 group z-10"
+                >
+                  <svg className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                  </svg>
+                </button>
+              )}
+            </div>
 
             {/* Thumbnails row */}
             <div className="flex gap-3 overflow-x-auto pb-3 scrollbar-thin">
