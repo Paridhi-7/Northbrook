@@ -378,18 +378,51 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
             </button>
           </div>
 
-          {/* Tab 1: Fabric & Details */}
+          {/* Tab 1: Fabric & Details (Product-Specific Specs) */}
           {activeTab === "details" && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4 max-w-3xl text-charcoal/80 text-sm leading-relaxed">
-              <p>
-                Crafted with NorthBrook&apos;s signature family-run approach to premium knitwear. We select fine combed natural fibres for enhanced durability, breathability, and luxurious comfort.
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6 max-w-3xl">
+              <p className="text-charcoal/80 text-sm leading-relaxed">
+                {product.description}
               </p>
-              <ul className="list-disc pl-5 space-y-1.5 text-xs sm:text-sm">
-                <li>Heavyweight 240+ GSM fabric weight for structured shape retention</li>
-                <li>Pre-shrunk cotton weave prevents post-wash shrinking</li>
-                <li>Double-needle reinforced collar and shoulder seams</li>
-                <li>Ethically sourced natural fibres from verified suppliers</li>
-              </ul>
+
+              {product.specs && (
+                <div className="bg-cream/40 rounded-2xl p-6 border border-charcoal/10">
+                  <h4 className="font-heading text-base font-bold text-charcoal mb-4 flex items-center gap-2">
+                    <span className="w-1.5 h-4 bg-rust rounded-full inline-block" />
+                    Garment Specifications
+                  </h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-3.5 gap-x-8 text-xs sm:text-sm">
+                    <div className="flex justify-between sm:justify-start sm:gap-4 py-1.5 border-b border-charcoal/5">
+                      <span className="font-bold text-charcoal/50 uppercase tracking-wider text-[11px] w-28 flex-shrink-0">Fabric Material</span>
+                      <span className="font-semibold text-charcoal">{product.specs.fabric}</span>
+                    </div>
+                    {product.specs.gsmOrWeight && (
+                      <div className="flex justify-between sm:justify-start sm:gap-4 py-1.5 border-b border-charcoal/5">
+                        <span className="font-bold text-charcoal/50 uppercase tracking-wider text-[11px] w-28 flex-shrink-0">Weight / GSM</span>
+                        <span className="font-semibold text-charcoal">{product.specs.gsmOrWeight}</span>
+                      </div>
+                    )}
+                    <div className="flex justify-between sm:justify-start sm:gap-4 py-1.5 border-b border-charcoal/5">
+                      <span className="font-bold text-charcoal/50 uppercase tracking-wider text-[11px] w-28 flex-shrink-0">Neck / Waist</span>
+                      <span className="font-semibold text-charcoal">{product.specs.neckOrWaist}</span>
+                    </div>
+                    {product.specs.sleeveLength && (
+                      <div className="flex justify-between sm:justify-start sm:gap-4 py-1.5 border-b border-charcoal/5">
+                        <span className="font-bold text-charcoal/50 uppercase tracking-wider text-[11px] w-28 flex-shrink-0">Sleeve Length</span>
+                        <span className="font-semibold text-charcoal">{product.specs.sleeveLength}</span>
+                      </div>
+                    )}
+                    <div className="flex justify-between sm:justify-start sm:gap-4 py-1.5 border-b border-charcoal/5">
+                      <span className="font-bold text-charcoal/50 uppercase tracking-wider text-[11px] w-28 flex-shrink-0">Fit Profile</span>
+                      <span className="font-semibold text-charcoal">{product.specs.fit}</span>
+                    </div>
+                    <div className="flex justify-between sm:justify-start sm:gap-4 py-1.5 border-b border-charcoal/5">
+                      <span className="font-bold text-charcoal/50 uppercase tracking-wider text-[11px] w-28 flex-shrink-0">Wash Care</span>
+                      <span className="font-semibold text-charcoal">{product.specs.washCare}</span>
+                    </div>
+                  </div>
+                </div>
+              )}
             </motion.div>
           )}
 

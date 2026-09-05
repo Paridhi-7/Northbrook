@@ -17,6 +17,15 @@ export interface Review {
   helpful: number;
 }
 
+export interface ProductSpec {
+  fabric: string;
+  gsmOrWeight?: string;
+  neckOrWaist: string;
+  sleeveLength?: string;
+  fit: string;
+  washCare: string;
+}
+
 export interface Product {
   id: string;
   name: string;
@@ -31,6 +40,7 @@ export interface Product {
   colors: { name: string; hex: string }[];
   sizeChart?: SizeMeasurement[];
   reviews?: Review[];
+  specs?: ProductSpec;
 }
 
 function productImages(slug: string, count: number, frontNum = 2): string[] {
@@ -45,24 +55,24 @@ function productImages(slug: string, count: number, frontNum = 2): string[] {
 }
 
 const defaultMenSizeChart: SizeMeasurement[] = [
-  { size: "S", chest: '38"', length: '27.5"', shoulder: '18"', sleeve: '8.5"' },
-  { size: "M", chest: '40"', length: '28.5"', shoulder: '19"', sleeve: '9.0"' },
-  { size: "L", chest: '42"', length: '29.5"', shoulder: '20"', sleeve: '9.5"' },
-  { size: "XL", chest: '44"', length: '30.5"', shoulder: '21"', sleeve: '10.0"' },
+  { size: "S", chest: '38"', length: '27.5"', shoulder: '18.0"', sleeve: '8.5"' },
+  { size: "M", chest: '40"', length: '28.5"', shoulder: '19.0"', sleeve: '9.0"' },
+  { size: "L", chest: '42"', length: '29.5"', shoulder: '20.0"', sleeve: '9.5"' },
+  { size: "XL", chest: '44"', length: '30.5"', shoulder: '21.0"', sleeve: '10.0"' },
 ];
 
 const defaultWomenSizeChart: SizeMeasurement[] = [
-  { size: "XS", chest: '34"', length: '25.0"', shoulder: '16"', sleeve: '7.5"' },
-  { size: "S", chest: '36"', length: '26.0"', shoulder: '17"', sleeve: '8.0"' },
-  { size: "M", chest: '38"', length: '27.0"', shoulder: '18"', sleeve: '8.5"' },
-  { size: "L", chest: '40"', length: '28.0"', shoulder: '19"', sleeve: '9.0"' },
+  { size: "XS", chest: '34"', length: '25.0"', shoulder: '16.0"', sleeve: '7.5"' },
+  { size: "S", chest: '36"', length: '26.0"', shoulder: '17.0"', sleeve: '8.0"' },
+  { size: "M", chest: '38"', length: '27.0"', shoulder: '18.0"', sleeve: '8.5"' },
+  { size: "L", chest: '40"', length: '28.0"', shoulder: '19.0"', sleeve: '9.0"' },
 ];
 
 const defaultBottomsSizeChart: SizeMeasurement[] = [
-  { size: "30", chest: '30" Waist', length: '39.5"', shoulder: '24" Thigh', sleeve: '16" Leg' },
-  { size: "32", chest: '32" Waist', length: '40.5"', shoulder: '25" Thigh', sleeve: '17" Leg' },
-  { size: "34", chest: '34" Waist', length: '41.5"', shoulder: '26" Thigh', sleeve: '18" Leg' },
-  { size: "36", chest: '36" Waist', length: '42.5"', shoulder: '27" Thigh', sleeve: '19" Leg' },
+  { size: "30", chest: '30" Waist', length: '39.5"', shoulder: '24" Thigh', sleeve: '16" Leg Opening' },
+  { size: "32", chest: '32" Waist', length: '40.5"', shoulder: '25" Thigh', sleeve: '17" Leg Opening' },
+  { size: "34", chest: '34" Waist', length: '41.5"', shoulder: '26" Thigh', sleeve: '18" Leg Opening' },
+  { size: "36", chest: '36" Waist', length: '42.5"', shoulder: '27" Thigh', sleeve: '19" Leg Opening' },
 ];
 
 const defaultReviews: Review[] = [
@@ -113,6 +123,14 @@ export const products: Product[] = [
     colors: [{ name: "Acid Green", hex: "#7a8b6f" }],
     sizeChart: defaultMenSizeChart,
     reviews: defaultReviews,
+    specs: {
+      fabric: "100% Acid-Washed Combed Cotton",
+      gsmOrWeight: "240 GSM Heavyweight Jersey",
+      neckOrWaist: "Ribbed Crew Neck",
+      sleeveLength: "Half Sleeves",
+      fit: "Relaxed Boxy Fit",
+      washCare: "Machine Wash Cold Inside Out",
+    },
   },
   {
     id: "cargo-boys",
@@ -126,6 +144,14 @@ export const products: Product[] = [
     colors: [{ name: "Olive", hex: "#5a6b4a" }],
     sizeChart: defaultBottomsSizeChart,
     reviews: defaultReviews,
+    specs: {
+      fabric: "98% Cotton Twill, 2% Elastane",
+      gsmOrWeight: "320 GSM Heavy Twill",
+      neckOrWaist: "Elastic Waistband with Drawstring",
+      sleeveLength: "Full Length Pants",
+      fit: "Relaxed Tapered Utility Fit",
+      washCare: "Machine Wash Cold with Like Colors",
+    },
   },
   {
     id: "game-over-hoodie-boys",
@@ -140,6 +166,14 @@ export const products: Product[] = [
     colors: [{ name: "Charcoal Black", hex: "#1a1a1a" }],
     sizeChart: defaultMenSizeChart,
     reviews: defaultReviews,
+    specs: {
+      fabric: "80% Cotton, 20% Polyester Fleece",
+      gsmOrWeight: "420 GSM Heavyweight Fleece",
+      neckOrWaist: "Double-Lined Hood with Drawstrings",
+      sleeveLength: "Long Sleeves with Ribbed Cuffs",
+      fit: "Oversized Streetwear Fit",
+      washCare: "Machine Wash Cold, Tumble Dry Low",
+    },
   },
   {
     id: "hand-loves-tees-boys",
@@ -153,6 +187,14 @@ export const products: Product[] = [
     colors: [{ name: "Cream White", hex: "#f5f1eb" }],
     sizeChart: defaultMenSizeChart,
     reviews: defaultReviews,
+    specs: {
+      fabric: "100% Organic Ring-Spun Cotton",
+      gsmOrWeight: "200 GSM Midweight",
+      neckOrWaist: "Classic Round Neck",
+      sleeveLength: "Half Sleeves",
+      fit: "Regular Everyday Fit",
+      washCare: "Machine Wash Cold Gentle",
+    },
   },
   {
     id: "jonny-deep-hoodie-boys",
@@ -168,6 +210,14 @@ export const products: Product[] = [
     colors: [{ name: "Deep Charcoal", hex: "#2b2b2b" }],
     sizeChart: defaultMenSizeChart,
     reviews: defaultReviews,
+    specs: {
+      fabric: "85% Cotton, 15% Brushed Fleece",
+      gsmOrWeight: "440 GSM Ultra-Heavy Fleece",
+      neckOrWaist: "Structured Hooded Neck",
+      sleeveLength: "Long Sleeves",
+      fit: "Boyfriend Oversized Fit",
+      washCare: "Machine Wash Cold Inside Out",
+    },
   },
   {
     id: "mag-dont-ask-me-why-tees-boys",
@@ -181,6 +231,14 @@ export const products: Product[] = [
     colors: [{ name: "Black", hex: "#1a1a1a" }],
     sizeChart: defaultMenSizeChart,
     reviews: defaultReviews,
+    specs: {
+      fabric: "100% Bio-Washed Combed Cotton",
+      gsmOrWeight: "220 GSM",
+      neckOrWaist: "Ribbed Crew Neck",
+      sleeveLength: "Half Sleeves",
+      fit: "Drop-Shoulder Relaxed Fit",
+      washCare: "Machine Wash Cold",
+    },
   },
   {
     id: "mag-sapprow-boys",
@@ -194,6 +252,14 @@ export const products: Product[] = [
     colors: [{ name: "Multi Brown", hex: "#b5651d" }],
     sizeChart: defaultMenSizeChart,
     reviews: defaultReviews,
+    specs: {
+      fabric: "100% Cotton Jersey Knit",
+      gsmOrWeight: "210 GSM",
+      neckOrWaist: "Reinforced Crew Neck",
+      sleeveLength: "Half Sleeves",
+      fit: "Standard Fit",
+      washCare: "Machine Wash Gentle",
+    },
   },
   {
     id: "the-weekend-tees-boys",
@@ -208,6 +274,14 @@ export const products: Product[] = [
     colors: [{ name: "Off White", hex: "#f5f1eb" }],
     sizeChart: defaultMenSizeChart,
     reviews: defaultReviews,
+    specs: {
+      fabric: "100% Sustainable Cotton",
+      gsmOrWeight: "190 GSM Light-Midweight",
+      neckOrWaist: "Crew Neck",
+      sleeveLength: "Half Sleeves",
+      fit: "Modern Boxy Fit",
+      washCare: "Machine Wash Cold",
+    },
   },
   {
     id: "think-again-boys",
@@ -221,6 +295,14 @@ export const products: Product[] = [
     colors: [{ name: "Slate Grey", hex: "#4a4a4a" }],
     sizeChart: defaultMenSizeChart,
     reviews: defaultReviews,
+    specs: {
+      fabric: "100% Super-Combed Cotton",
+      gsmOrWeight: "230 GSM",
+      neckOrWaist: "Round Neck",
+      sleeveLength: "Half Sleeves",
+      fit: "Relaxed Fit",
+      washCare: "Machine Wash Cold Inside Out",
+    },
   },
   {
     id: "vision-eye-tees-boys",
@@ -234,6 +316,14 @@ export const products: Product[] = [
     colors: [{ name: "Ink Black", hex: "#1a1a1a" }],
     sizeChart: defaultMenSizeChart,
     reviews: defaultReviews,
+    specs: {
+      fabric: "100% Heavyweight Cotton Jersey",
+      gsmOrWeight: "250 GSM Heavyweight",
+      neckOrWaist: "High Collar Crew Neck",
+      sleeveLength: "Elbow Length Half Sleeves",
+      fit: "Oversized Drop-Shoulder",
+      washCare: "Machine Wash Cold",
+    },
   },
   {
     id: "whatever-hoodie-boys",
@@ -247,6 +337,14 @@ export const products: Product[] = [
     colors: [{ name: "Heather Grey", hex: "#6b6b6b" }],
     sizeChart: defaultMenSizeChart,
     reviews: defaultReviews,
+    specs: {
+      fabric: "75% Cotton, 25% Soft Fleece",
+      gsmOrWeight: "400 GSM Fleece",
+      neckOrWaist: "Casual Drawstring Hood",
+      sleeveLength: "Long Sleeves",
+      fit: "Slouchy Relaxed Fit",
+      washCare: "Machine Wash Cold",
+    },
   },
   {
     id: "cord-sets",
@@ -261,6 +359,14 @@ export const products: Product[] = [
     colors: [{ name: "Rich Brown", hex: "#8b6f47" }],
     sizeChart: defaultMenSizeChart,
     reviews: defaultReviews,
+    specs: {
+      fabric: "100% Fine-Wale Cotton Corduroy",
+      gsmOrWeight: "350 GSM Corduroy",
+      neckOrWaist: "Button Collar Shirt / Elastic Waist Pants",
+      sleeveLength: "Long Sleeves / Full Length Bottoms",
+      fit: "Relaxed Co-Ord Fit",
+      washCare: "Hand Wash / Gentle Machine Wash",
+    },
   },
   {
     id: "white-dots",
@@ -274,6 +380,14 @@ export const products: Product[] = [
     colors: [{ name: "Ivory", hex: "#f5f1eb" }],
     sizeChart: defaultMenSizeChart,
     reviews: defaultReviews,
+    specs: {
+      fabric: "95% Cotton, 5% Elastane Stretch Knit",
+      gsmOrWeight: "180 GSM Light Stretch",
+      neckOrWaist: "Classic Crew Neck",
+      sleeveLength: "Half Sleeves",
+      fit: "Slim-Regular Fit",
+      washCare: "Machine Wash Cold",
+    },
   },
 
   // WOMEN'S
@@ -290,6 +404,14 @@ export const products: Product[] = [
     colors: [{ name: "Washed Olive", hex: "#7a8b6f" }],
     sizeChart: defaultWomenSizeChart,
     reviews: defaultReviews,
+    specs: {
+      fabric: "100% Acid-Washed Cotton Jersey",
+      gsmOrWeight: "210 GSM",
+      neckOrWaist: "Relaxed Round Neck",
+      sleeveLength: "Short Sleeves",
+      fit: "Cropped Boxy Fit",
+      washCare: "Machine Wash Cold Inside Out",
+    },
   },
   {
     id: "butterfly",
@@ -304,6 +426,14 @@ export const products: Product[] = [
     colors: [{ name: "Natural Cream", hex: "#f5f1eb" }],
     sizeChart: defaultWomenSizeChart,
     reviews: defaultReviews,
+    specs: {
+      fabric: "100% Organic Featherweight Cotton",
+      gsmOrWeight: "180 GSM Soft Jersey",
+      neckOrWaist: "Fine Ribbed Crew Neck",
+      sleeveLength: "Short Sleeves",
+      fit: "Easy Feminine Fit",
+      washCare: "Machine Wash Gentle Cold",
+    },
   },
   {
     id: "cargo-girls",
@@ -317,6 +447,14 @@ export const products: Product[] = [
     colors: [{ name: "Sage Green", hex: "#5a6b4a" }],
     sizeChart: defaultBottomsSizeChart,
     reviews: defaultReviews,
+    specs: {
+      fabric: "97% Cotton Canvas, 3% Spandex",
+      gsmOrWeight: "300 GSM Stretch Twill",
+      neckOrWaist: "High-Rise Elastic Drawstring Waist",
+      sleeveLength: "Full Length Bottoms",
+      fit: "Relaxed Utility Taper",
+      washCare: "Machine Wash Cold",
+    },
   },
   {
     id: "crocodile-girls",
@@ -330,6 +468,14 @@ export const products: Product[] = [
     colors: [{ name: "Forest Green", hex: "#4a6b4a" }],
     sizeChart: defaultWomenSizeChart,
     reviews: defaultReviews,
+    specs: {
+      fabric: "100% Pre-Shrunk Cotton",
+      gsmOrWeight: "190 GSM",
+      neckOrWaist: "Crew Neck",
+      sleeveLength: "Short Sleeves",
+      fit: "Regular Fit",
+      washCare: "Machine Wash Cold",
+    },
   },
   {
     id: "game-over-hoodie-girls",
@@ -344,6 +490,14 @@ export const products: Product[] = [
     colors: [{ name: "Midnight Black", hex: "#1a1a1a" }],
     sizeChart: defaultWomenSizeChart,
     reviews: defaultReviews,
+    specs: {
+      fabric: "80% Cotton, 20% Soft Fleece",
+      gsmOrWeight: "410 GSM Fleece",
+      neckOrWaist: "Plush Hooded Neck",
+      sleeveLength: "Long Sleeves with Cuffs",
+      fit: "Cropped Relaxed Fit",
+      washCare: "Machine Wash Cold",
+    },
   },
   {
     id: "hand-loves-girls",
@@ -357,6 +511,14 @@ export const products: Product[] = [
     colors: [{ name: "Soft Pink", hex: "#e8b4b8" }],
     sizeChart: defaultWomenSizeChart,
     reviews: defaultReviews,
+    specs: {
+      fabric: "100% Ring-Spun Cotton",
+      gsmOrWeight: "185 GSM",
+      neckOrWaist: "Scoop Round Neck",
+      sleeveLength: "Cap Short Sleeves",
+      fit: "Tailored Slim Fit",
+      washCare: "Machine Wash Cold",
+    },
   },
   {
     id: "jonny-deep-hoodie-girls",
@@ -372,6 +534,14 @@ export const products: Product[] = [
     colors: [{ name: "Deep Charcoal", hex: "#2b2b2b" }],
     sizeChart: defaultWomenSizeChart,
     reviews: defaultReviews,
+    specs: {
+      fabric: "85% Cotton Fleece",
+      gsmOrWeight: "430 GSM Heavy Fleece",
+      neckOrWaist: "Boyfriend Hooded Neck",
+      sleeveLength: "Long Sleeves",
+      fit: "Oversized Boyfriend Fit",
+      washCare: "Machine Wash Cold Inside Out",
+    },
   },
   {
     id: "mag-dont-ask-me-why-girls",
@@ -385,6 +555,14 @@ export const products: Product[] = [
     colors: [{ name: "Jet Black", hex: "#1a1a1a" }],
     sizeChart: defaultWomenSizeChart,
     reviews: defaultReviews,
+    specs: {
+      fabric: "100% Bio-Washed Cotton",
+      gsmOrWeight: "200 GSM",
+      neckOrWaist: "Curved Round Neck",
+      sleeveLength: "Short Sleeves",
+      fit: "Relaxed Fit",
+      washCare: "Machine Wash Cold",
+    },
   },
   {
     id: "mag-sapprow-girls",
@@ -398,6 +576,14 @@ export const products: Product[] = [
     colors: [{ name: "Multi Earth", hex: "#b5651d" }],
     sizeChart: defaultWomenSizeChart,
     reviews: defaultReviews,
+    specs: {
+      fabric: "100% Soft Cotton Knit",
+      gsmOrWeight: "195 GSM",
+      neckOrWaist: "Ribbed Crew Neck",
+      sleeveLength: "Short Sleeves",
+      fit: "Flattering Regular Fit",
+      washCare: "Machine Wash Gentle",
+    },
   },
   {
     id: "vision-tees-girls",
@@ -411,6 +597,14 @@ export const products: Product[] = [
     colors: [{ name: "Classic Black", hex: "#1a1a1a" }],
     sizeChart: defaultWomenSizeChart,
     reviews: defaultReviews,
+    specs: {
+      fabric: "100% Combed Cotton",
+      gsmOrWeight: "220 GSM",
+      neckOrWaist: "Crew Neck",
+      sleeveLength: "Half Sleeves",
+      fit: "Oversized Streetwear Fit",
+      washCare: "Machine Wash Cold",
+    },
   },
   {
     id: "weekend-girls-tees",
@@ -425,6 +619,14 @@ export const products: Product[] = [
     colors: [{ name: "Chalk White", hex: "#f5f1eb" }],
     sizeChart: defaultWomenSizeChart,
     reviews: defaultReviews,
+    specs: {
+      fabric: "100% Breathable Cotton",
+      gsmOrWeight: "180 GSM",
+      neckOrWaist: "Casual Round Neck",
+      sleeveLength: "Short Sleeves",
+      fit: "Relaxed Fit",
+      washCare: "Machine Wash Cold",
+    },
   },
   {
     id: "whatever-hoodie-girls",
@@ -438,6 +640,14 @@ export const products: Product[] = [
     colors: [{ name: "Heather Grey", hex: "#6b6b6b" }],
     sizeChart: defaultWomenSizeChart,
     reviews: defaultReviews,
+    specs: {
+      fabric: "70% Cotton, 30% Fleece",
+      gsmOrWeight: "390 GSM Soft Fleece",
+      neckOrWaist: "Drawstring Hood",
+      sleeveLength: "Long Sleeves",
+      fit: "Slouchy Comfort Fit",
+      washCare: "Machine Wash Cold",
+    },
   },
   {
     id: "shit-happen-acid-waash-girls",
@@ -451,6 +661,14 @@ export const products: Product[] = [
     colors: [{ name: "Acid Slate", hex: "#7a8b6f" }],
     sizeChart: defaultWomenSizeChart,
     reviews: defaultReviews,
+    specs: {
+      fabric: "100% Acid-Washed Cotton",
+      gsmOrWeight: "210 GSM",
+      neckOrWaist: "Round Neck",
+      sleeveLength: "Short Sleeves",
+      fit: "Edgy Relaxed Fit",
+      washCare: "Machine Wash Cold Inside Out",
+    },
   },
   {
     id: "day-dream-hoodie",
@@ -465,6 +683,14 @@ export const products: Product[] = [
     colors: [{ name: "Soft Cream", hex: "#f5f1eb" }],
     sizeChart: defaultWomenSizeChart,
     reviews: defaultReviews,
+    specs: {
+      fabric: "80% Cotton, 20% Fleece",
+      gsmOrWeight: "420 GSM Brushed Fleece",
+      neckOrWaist: "Plush Hooded Neck",
+      sleeveLength: "Long Sleeves",
+      fit: "Unisex Oversized Fit",
+      washCare: "Machine Wash Cold",
+    },
   },
   {
     id: "racing-hoodie",
@@ -479,6 +705,14 @@ export const products: Product[] = [
     colors: [{ name: "Rust Red", hex: "#b5651d" }],
     sizeChart: defaultWomenSizeChart,
     reviews: defaultReviews,
+    specs: {
+      fabric: "85% Cotton, 15% Polyester Fleece",
+      gsmOrWeight: "430 GSM Heavyweight",
+      neckOrWaist: "Double-Layered Hood",
+      sleeveLength: "Long Sleeves",
+      fit: "Relaxed Boxy Fit",
+      washCare: "Machine Wash Cold",
+    },
   },
 ];
 
