@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
+import { WishlistProvider } from "@/context/WishlistContext";
 import Navbar from "@/components/Navbar";
 import CartDrawer from "@/components/CartDrawer";
 import Footer from "@/components/Footer";
@@ -19,22 +20,26 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "NorthBrook — Premium Family-Run Knitwear",
+  title: "NorthBrook - Premium Family-Run Knitwear",
   description:
     "Handcrafted knitwear where comfort meets fashion. NorthBrook is a family-run brand creating timeless pieces from the finest natural fibres.",
 };
 
 export default function RootLayout({
   children,
-}: LayoutProps<"/">) {
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en" className={`${playfair.variable} ${inter.variable}`}>
-      <body className="min-h-screen flex flex-col">
+      <body className="min-h-screen flex flex-col bg-cream text-charcoal">
         <CartProvider>
-          <Navbar />
-          <CartDrawer />
-          <main className="flex-1">{children}</main>
-          <Footer />
+          <WishlistProvider>
+            <Navbar />
+            <CartDrawer />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </WishlistProvider>
         </CartProvider>
       </body>
     </html>
